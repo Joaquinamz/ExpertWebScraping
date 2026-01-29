@@ -112,18 +112,40 @@ const ResultsTable = ({ results, onExport }) => {
 
   // Cambiar ordenamiento
   const handleSort = (key) => {
-    setSortConfig(prev => ({
-      key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc'
-    }));
+    setSortConfig(prev => {
+      // Si se hace click en la misma columna, alternar dirección
+      if (prev.key === key) {
+        return {
+          key,
+          direction: prev.direction === 'asc' ? 'desc' : 'asc'
+        };
+      }
+      
+      // Si es una columna nueva, decidir dirección inicial
+      // Para score: empezar en descendente (mayor a menor es más útil)
+      // Para otros: empezar en ascendente (A→Z)
+      return {
+        key,
+        direction: key === 'validation_score' ? 'desc' : 'asc'
+      };
+    });
   };
 
   // Obtener icono de ordenamiento
   const getSortIcon = (key) => {
     if (sortConfig.key !== key) return null;
+    
+    // Para score: iconos normales (asc ↑, desc ↓)
+    if (key === 'validation_score') {
+      return sortConfig.direction === 'asc' ? 
+        <SortAsc className="w-4 h-4" /> : 
+        <SortDesc className="w-4 h-4" />;
+    }
+    
+    // Para otros campos: iconos invertidos (asc ↓, desc ↑)
     return sortConfig.direction === 'asc' ? 
-      <SortAsc className="w-4 h-4" /> : 
-      <SortDesc className="w-4 h-4" />;
+      <SortDesc className="w-4 h-4" /> : 
+      <SortAsc className="w-4 h-4" />;
   };
 
   // Formatear fecha
@@ -248,8 +270,13 @@ const ResultsTable = ({ results, onExport }) => {
                     Organización {getSortIcon('organization')}
                   </div>
                 </th>
-                <th className="px-4 py-4 text-left text-sm font-semibold">
-                  Cargo
+                <th 
+                  className="px-4 py-4 text-left text-sm font-semibold cursor-pointer hover:bg-blue-700 transition-colors"
+                  onClick={() => handleSort('position')}
+                >
+                  <div className="flex items-center gap-2">
+                    Cargo {getSortIcon('position')}
+                  </div>
                 </th>
                 <th className="px-4 py-4 text-left text-sm font-semibold">
                   Contacto

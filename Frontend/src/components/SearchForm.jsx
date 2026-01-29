@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Sparkles, MapPin, Briefcase, ChevronDown, ChevronUp } from 'lucide-react';
 import { AREA_OPTIONS, REGION_OPTIONS } from '../constants';
-// import Autocomplete from './Autocomplete'; // Temporalmente deshabilitado
+import KeywordSuggestions from './KeywordSuggestions';
 
 const SearchForm = ({ onSearch, isSearching }) => {
   const [formData, setFormData] = useState({
@@ -89,6 +89,7 @@ const SearchForm = ({ onSearch, isSearching }) => {
                 Palabras clave *
               </div>
             </label>
+            
             <input
               type="text"
               id="keywords"
@@ -104,7 +105,69 @@ const SearchForm = ({ onSearch, isSearching }) => {
                 <span>⚠️</span> {errors.keywords}
               </p>
             )}
-            <p className="mt-2 text-xs text-gray-500">
+            
+            {/* Sugerencias de palabras clave */}
+            <div className="mt-2">
+              <KeywordSuggestions 
+                onSelectKeyword={(keyword) => {
+                  setFormData(prev => {
+                    const currentText = prev.keywords || '';
+                    
+                    // Si está vacío, agregar solo la palabra (sin coma)
+                    if (!currentText.trim()) {
+                      return { ...prev, keywords: keyword };
+                    }
+                    
+                    // Dividir por comas para encontrar términos separados
+                    const terms = currentText.split(',').map(t => t.trim()).filter(t => t.length > 0);
+                    const lastTerm = terms[terms.length - 1] || '';
+                    
+                    // Si el último término está vacío o el texto termina en coma (ej: "palabra1, ")
+                    if (lastTerm === '') {
+                      // Agregar la nueva palabra
+                      const previousTerms = terms.slice(0, -1);
+                      if (previousTerms.length > 0) {
+                        return { ...prev, keywords: previousTerms.join(', ') + ', ' + keyword };
+                      }
+                      return { ...prev, keywords: keyword };
+                    }
+                    
+                    // Normalizar para comparación (minúsculas, sin acentos)
+                    const normalizeText = (text) => text.toLowerCase()
+                      .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                    
+                    const normalizedLastTerm = normalizeText(lastTerm);
+                    const normalizedKeyword = normalizeText(keyword);
+                    
+                    // Verificar si el término coincide con alguna palabra de la sugerencia
+                    // Casos:
+                    // 1. "méd" coincide con "médico" en "médico general"
+                    // 2. "obr" coincide con "obra" en "jefe de obra"
+                    // 3. "ingen" coincide con "ingeniero" en "ingeniero civil"
+                    
+                    const keywordWords = normalizedKeyword.split(/\s+/);
+                    const shouldReplace = keywordWords.some(word => 
+                      word.startsWith(normalizedLastTerm) && normalizedLastTerm.length >= 2
+                    );
+                    
+                    if (shouldReplace) {
+                      // Reemplazar el último término con la sugerencia completa
+                      const previousTerms = terms.slice(0, -1);
+                      if (previousTerms.length > 0) {
+                        return { ...prev, keywords: previousTerms.join(', ') + ', ' + keyword };
+                      }
+                      return { ...prev, keywords: keyword };
+                    }
+                    
+                    // Si no coincide, agregar como nuevo término
+                    return { ...prev, keywords: terms.join(', ') + ', ' + keyword };
+                  });
+                }}
+                currentValue={formData.keywords}
+              />
+            </div>
+            
+            <p className="mt-2 text-sm text-gray-600 font-medium">
               💡 Tip: Sé específico para obtener mejores resultados
             </p>
           </div>
