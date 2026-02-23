@@ -1,0 +1,130 @@
+version: '3.8'
+
+services:
+  # ============================================
+  # n8n - Workflow Automation
+  # ============================================
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: webscraping_n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # Autenticación básica
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=admin123  # CAMBIAR EN PRODUCCIÓN
+      
+      # Configuración general
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_HOST=localhost
+      - WEBHOOK_URL=http://localhost:5678/
+      
+      # Zona horaria
+      - GENERIC_TIMEZONE=America/Santiago
+      - TZ=America/Santiago
+      
+      # Almacenamiento de ejecuciones
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=all
+      - EXECUTIONS_DATA_SAVE_ON_ERROR=all
+      - EXECUTIONS_DATA_MAX_AGE=168  # 7 días
+      
+      # Base de datos interna de n8n (opcional, usa SQLite por defecto)
+      # Descomenta las siguientes líneas si quieres que n8n use MySQL para sus datos
+      # - DB_TYPE=mysqldb
+      # - DB_MYSQLDB_HOST=mysql_n8n
+      # - DB_MYSQLDB_PORT=3306
+      # - DB_MYSQLDB_DATABASE=n8n_db
+      # - DB_MYSQLDB_USER=n8n_user
+      # - DB_MYSQLDB_PASSWORD=n8n_password
+      
+    volumes:
+      # Persistencia de workflows y credenciales
+      - n8n_data:/home/node/.n8n
+      
+      # Opcional: Backup local de workflows en tu proyecto
+      - ./n8n-workflows:/home/node/.n8n/workflows
+    
+    networks:
+      - webscraping-network
+
+  # ============================================
+  # MySQL (opcional) - Base de datos interna para n8n
+  # Descomenta si quieres que n8n guarde sus datos en MySQL
+  # ============================================
+  # mysql_n8n:
+  #   image: mysql:8.0
+  #   container_name: n8n_mysql
+  #   restart: unless-stopped
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=rootpassword
+  #     - MYSQL_DATABASE=n8n_db
+  #     - MYSQL_USER=n8n_user
+  #     - MYSQL_PASSWORD=n8n_password
+  #   volumes:
+  #     - mysql_n8n_data:/var/lib/mysql
+  #   ports:
+  #     - "3307:3306"  # Puerto diferente para no chocar con tu MySQL principal
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     timeout: 5s
+  #     retries: 10
+  #   networks:
+  #     - webscraping-network
+
+volumes:
+  n8n_data:
+    driver: local
+  # mysql_n8n_data:
+  #   driver: local
+
+networks:
+  webscraping-network:
+    driver: bridge
+
+# ============================================
+# INSTRUCCIONES DE USO
+# ============================================
+#
+# 1. Iniciar n8n:
+#    docker-compose -f docker-compose.n8n.yml up -d
+#
+# 2. Acceder a n8n:
+#    http://localhost:5678
+#    Usuario: admin
+#    Contraseña: admin123
+#
+# 3. Configurar credencial MySQL en n8n:
+#    - Si tu MySQL está en tu PC (no Docker):
+#      Host: host.docker.internal
+#      Port: 3306
+#      Database: webscraping
+#      User: root
+#      Password: [tu contraseña]
+#
+#    - Si tu MySQL está en otro contenedor Docker:
+#      Host: [nombre_del_contenedor_mysql]
+#      Port: 3306
+#
+# 4. Detener n8n:
+#    docker-compose -f docker-compose.n8n.yml down
+#
+# 5. Ver logs:
+#    docker-compose -f docker-compose.n8n.yml logs -f n8n
+#
+# 6. Actualizar n8n:
+#    docker-compose -f docker-compose.n8n.yml pull
+#    docker-compose -f docker-compose.n8n.yml up -d
+#
+# ============================================
+# NOTAS IMPORTANTES
+# ============================================
+#
+# - n8n usa SQLite por defecto para sus datos internos (workflows, credenciales)
+# - Tu MySQL del proyecto (webscraping) se configura como credencial dentro de n8n
+# - Los workflows se guardan en el volumen n8n_data y opcionalmente en ./n8n-workflows
+# - Cambia las contraseñas en producción
+# - Si tienes problemas de conexión a MySQL local, usa host.docker.internal
+#
