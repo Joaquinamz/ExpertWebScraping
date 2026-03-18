@@ -34,8 +34,9 @@ class Settings(BaseSettings):
     SECRET_KEY: str = "your-secret-key-change-in-production"
     ALGORITHM: str = "HS256"
     
-    # n8n (opcional)
-    N8N_WEBHOOK_URL: str = "http://localhost:5678/webhook/"
+    # n8n Configuration
+    N8N_WEBHOOK_URL: str = "http://localhost:5678/webhook/search"
+    N8N_API_KEY: str = "your-super-secret-n8n-key-12345"
     
     # Demo Mode
     DEMO_MODE: bool = True

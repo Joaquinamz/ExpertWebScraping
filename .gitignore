@@ -71,3 +71,15 @@ htmlcov/
 # Archivos de sistema
 Thumbs.db
 Desktop.ini
+# Archivos problemáticos
+n8n-entrypoint.sh
+results.html
+test_results/
+
+# Backups
+backups/
+*.sql
+*.tar.gz
+
+# Docker overrides
+docker-compose.override.yml

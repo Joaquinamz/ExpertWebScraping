@@ -1,0 +1,31 @@
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+!DOCKER_DEPLOYMENT.md
+
+# Environment files
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.log
+results.html
+*.tmp
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore

@@ -98,6 +98,24 @@ class SearchStatsResponse(BaseModel):
     total_contacts: int
     avg_contacts_per_search: float
     completed_searches: int
+
+
+class N8NCallback(BaseModel):
+    """Schema para el callback de n8n cuando termina el scraping."""
+    search_id: int
+    status: str
+    results_count: int
+    duplicates_count: Optional[int] = 0
+    execution_time_ms: Optional[int] = 0
+    avg_validation_score: Optional[float] = 0.0
+    stats: Optional[dict] = {}
+    
+    @validator('status')
+    def validate_status(cls, v):
+        allowed_statuses = ['completed', 'failed', 'error']
+        if v not in allowed_statuses:
+            raise ValueError(f'Estado debe ser uno de: {", ".join(allowed_statuses)}')
+        return v
     failed_searches: int
     high_quality_contacts: int
     avg_execution_time_seconds: Optional[float] = None

@@ -1,0 +1,124 @@
+services:
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: webscraping_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-20020715Jc!}
+      MYSQL_DATABASE: ${DB_NAME:-expert_finder_db}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Backend2/database:/docker-entrypoint-initdb.d:ro
+    networks:
+      - webscraping_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD:-20020715Jc!}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend FastAPI
+  backend:
+    build:
+      context: ./Backend2
+      dockerfile: Dockerfile
+    container_name: webscraping_backend
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-20020715Jc!}
+      - DB_NAME=${DB_NAME:-expert_finder_db}
+      - N8N_WEBHOOK_URL=http://n8n:5678/webhook-test/%60search%60
+      - N8N_API_KEY=${N8N_API_KEY}
+      - CORS_ORIGINS=http://localhost:80,http://localhost:3000,http://localhost:5173
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production}
+      - DEMO_MODE=${DEMO_MODE:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      mysql:
+        condition: service_healthy
+      n8n:
+        condition: service_started
+    networks:
+      - webscraping_network
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8081/health\")' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # n8n Workflow Automation
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: webscraping_n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin}
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_SECURE_COOKIE=false
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      - N8N_VERSION_NOTIFICATIONS_ENABLED=false
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://n8n:5678/
+      - GENERIC_TIMEZONE=America/Santiago
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - webscraping_network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5678/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: webscraping_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - webscraping_network
+    healthcheck:
+      test: ["CMD-SHELL", "pidof nginx || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  webscraping_network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-webscraping
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
+
+volumes:
+  mysql_data:
+    driver: local
+  n8n_data:
+    driver: local

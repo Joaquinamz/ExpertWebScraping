@@ -26,6 +26,7 @@ CREATE TABLE searches (
     started_at TIMESTAMP NULL,
     finished_at TIMESTAMP NULL,
     results_count INT DEFAULT 0,
+    valid_results_count INT DEFAULT 0,
     error_message TEXT,
     ip_hash VARCHAR(64),
     user_agent TEXT,

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // Configuración base de Axios
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081/api/v1';
+// Usa ruta relativa para que nginx proxy maneje el routing al backend
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
