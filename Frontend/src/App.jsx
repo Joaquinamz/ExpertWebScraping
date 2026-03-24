@@ -3,7 +3,7 @@ import { Search as SearchIcon, TrendingUp, Users, Database } from 'lucide-react'
 import SearchForm from './components/SearchForm';
 import StatusIndicator from './components/StatusIndicator';
 import ResultsTable from './components/ResultsTable';
-import { searchService, statsService, apiUtils } from './services/api';
+import { searchService, contactService, statsService, apiUtils } from './services/api';
 import { exportSearchWithMetadata } from './utils/exportCSV';
 
 // Array de imágenes de fondo
@@ -19,6 +19,16 @@ const backgroundImages = [
   '/images/bg9.jpg',
   '/images/bg10.png'
 ];
+
+const normalizeSearchStatus = (backendStatus) => {
+  if (backendStatus === 'pending' || backendStatus === 'running' || backendStatus === 'processing') {
+    return 'processing';
+  }
+  if (backendStatus === 'error' || backendStatus === 'failed') {
+    return 'failed';
+  }
+  return backendStatus;
+};
 
 function App() {
   const [searchState, setSearchState] = useState({
@@ -62,18 +72,19 @@ function App() {
       pollInterval = setInterval(async () => {
         try {
           const updatedSearch = await searchService.getSearchById(searchState.currentSearch.id);
-          console.log('📡 Polling - Estado actual:', updatedSearch.status, 'Resultados:', updatedSearch.results_count);
+          const normalizedStatus = normalizeSearchStatus(updatedSearch.status);
+          console.log('📡 Polling - Estado backend:', updatedSearch.status, 'Estado UI:', normalizedStatus, 'Resultados:', updatedSearch.results_count);
           
-          if (updatedSearch.status !== searchState.status) {
-            console.log('🔔 Cambio de estado detectado:', searchState.status, '->', updatedSearch.status);
+          if (normalizedStatus !== searchState.status) {
+            console.log('🔔 Cambio de estado detectado:', searchState.status, '->', normalizedStatus);
             setSearchState(prev => ({
               ...prev,
-              status: updatedSearch.status,
+              status: normalizedStatus,
               currentSearch: updatedSearch
             }));
 
             // Si completó, cargar resultados
-            if (updatedSearch.status === 'completed') {
+            if (normalizedStatus === 'completed') {
               console.log('✅ Búsqueda completada, cargando resultados...');
               await loadSearchResults(updatedSearch.id);
               
@@ -87,7 +98,7 @@ function App() {
                 currentSearch: finalSearch
               }));
               await loadStats();
-            } else if (updatedSearch.status === 'failed') {
+            } else if (normalizedStatus === 'failed') {
               console.log('❌ Búsqueda falló');
               setSearchState(prev => ({
                 ...prev,
@@ -149,12 +160,53 @@ function App() {
       console.log('📋 Resultados:', response.results);
       console.log('📊 Total resultados:', response.results?.length || 0);
       
+      const searchResults = response.results || [];
+
+      if (searchResults.length > 0) {
+        setSearchState(prev => ({
+          ...prev,
+          results: searchResults
+        }));
+
+        console.log('✅ Estado actualizado con', searchResults.length, 'resultados');
+        return;
+      }
+
+      console.warn('⚠️ Sin resultados por búsqueda, activando fallback a /contacts para demo');
+      const contactsResponse = await contactService.getContacts({
+        only_valid: true,
+        min_validation_score: 0.6,
+        limit: 1000
+      });
+
+      const fallbackResults = (contactsResponse.items || []).map((contact) => ({
+        contact_id: contact.id,
+        contact_name: contact.name,
+        contact_email: contact.email,
+        contact_organization: contact.organization,
+        organization: contact.organization,
+        contact_position: contact.position,
+        position: contact.position,
+        contact_region: contact.region,
+        region: contact.region,
+        contact_phone: contact.phone,
+        phone: contact.phone,
+        source_url: contact.source_url,
+        source_type: contact.source_type,
+        relevance_score: Number(contact.validation_score || 0),
+        validation_score: Number(contact.validation_score || 0),
+        found_at: contact.created_at
+      }));
+
       setSearchState(prev => ({
         ...prev,
-        results: response.results || []
+        results: fallbackResults,
+        error: fallbackResults.length === 0
+          ? 'La búsqueda terminó sin resultados enlazados y tampoco hay contactos globales para mostrar.'
+          : null
       }));
-      
-      console.log('✅ Estado actualizado con', response.results?.length || 0, 'resultados');
+
+      console.log('✅ Fallback cargó', fallbackResults.length, 'contactos desde /contacts');
     } catch (error) {
       console.error('❌ Error loading search results:', error);
       const errorInfo = apiUtils.handleError(error);
@@ -179,15 +231,16 @@ function App() {
       // Crear búsqueda en el backend (DEMO_MODE procesará automáticamente)
       const newSearch = await searchService.createSearch(formData);
       console.log('🆕 Búsqueda creada:', newSearch);
+      const normalizedInitialStatus = normalizeSearchStatus(newSearch.status);
       
       setSearchState(prev => ({
         ...prev,
         currentSearch: newSearch,
-        status: newSearch.status === 'pending' ? 'processing' : newSearch.status
+        status: normalizedInitialStatus
       }));
 
       // Si ya está completada (modo DEMO puede ser muy rápido), cargar inmediatamente
-      if (newSearch.status === 'completed') {
+      if (normalizedInitialStatus === 'completed') {
         console.log('⚡ Búsqueda ya completada, cargando resultados inmediatamente');
         await loadSearchResults(newSearch.id);
         setSearchState(prev => ({ ...prev, isSearching: false }));

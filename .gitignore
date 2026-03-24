@@ -83,3 +83,6 @@ backups/
 
 # Docker overrides
 docker-compose.override.yml
+
+# Documentation files (excluded from repository)
+*.md

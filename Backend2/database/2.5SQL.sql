@@ -540,14 +540,14 @@ SET @email_insertado = (
 
 UPDATE resultados_pruebas_hu25 
 SET resultado = CASE 
-    WHEN @email_insertado COLLATE utf8mb4_unicode_ci = @email_esperado COLLATE utf8mb4_unicode_ci THEN 
+    WHEN LOWER(@email_insertado) = LOWER(@email_esperado) THEN 
         CONCAT('✅ ÉXITO: Email normalizado a minúsculas por trigger (', @email_insertado, ')')
-    WHEN @email_insertado COLLATE utf8mb4_unicode_ci = @email_mayusculas COLLATE utf8mb4_unicode_ci THEN 
+    WHEN LOWER(@email_insertado) = LOWER(@email_mayusculas) THEN 
         CONCAT('⚠️ ADVERTENCIA: Email no normalizado (trigger podría no estar activo)')
     ELSE 
         CONCAT('❌ FALLO: Email inesperado (', COALESCE(@email_insertado, 'NULL'), ')')
 END,
-es_exito = (@email_insertado COLLATE utf8mb4_unicode_ci = @email_esperado COLLATE utf8mb4_unicode_ci)
+es_exito = (LOWER(@email_insertado) = LOWER(@email_esperado))
 WHERE nombre_prueba = 'Trigger normalización de email';
 
 -- Limpiar
