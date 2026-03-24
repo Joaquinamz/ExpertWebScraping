@@ -37,7 +37,6 @@ dist-ssr/
 *.local
 
 # Archivos de entorno y configuración sensible
-.env
 .env.local
 .env.*.local
 
