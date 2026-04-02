@@ -20,6 +20,22 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const ResultsTable = ({ results, onExport }) => {
+  const asText = (value) => {
+    if (value === null || value === undefined) return '';
+    if (typeof value === 'string') return value;
+    if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return '';
+    }
+  };
+
+  const asNumber = (value, fallback = 0) => {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  };
+
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'validation_score', direction: 'desc' });
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,11 +54,11 @@ const ResultsTable = ({ results, onExport }) => {
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(result => 
-        result.contact_name?.toLowerCase().includes(term) ||
-        result.contact_email?.toLowerCase().includes(term) ||
-        result.organization?.toLowerCase().includes(term) ||
-        result.position?.toLowerCase().includes(term) ||
-        result.contact_region?.toLowerCase().includes(term)
+        asText(result.contact_name).toLowerCase().includes(term) ||
+        asText(result.contact_email).toLowerCase().includes(term) ||
+        asText(result.organization).toLowerCase().includes(term) ||
+        asText(result.position).toLowerCase().includes(term) ||
+        asText(result.contact_region).toLowerCase().includes(term)
       );
     }
 
@@ -56,14 +72,14 @@ const ResultsTable = ({ results, onExport }) => {
     // Filtro por organización
     if (filters.organization) {
       filtered = filtered.filter(result => 
-        result.organization?.toLowerCase().includes(filters.organization.toLowerCase())
+        asText(result.organization).toLowerCase().includes(filters.organization.toLowerCase())
       );
     }
 
     // Filtro por score mínimo
     if (filters.minScore > 0) {
       filtered = filtered.filter(result => 
-        result.validation_score >= filters.minScore
+        asNumber(result.validation_score) >= filters.minScore
       );
     }
 
@@ -84,9 +100,13 @@ const ResultsTable = ({ results, onExport }) => {
         if (bValue === null || bValue === undefined) return -1;
 
         // Comparación
-        if (typeof aValue === 'string') {
-          aValue = aValue.toLowerCase();
-          bValue = bValue.toLowerCase();
+        const bothNumbers = Number.isFinite(Number(aValue)) && Number.isFinite(Number(bValue));
+        if (bothNumbers) {
+          aValue = Number(aValue);
+          bValue = Number(bValue);
+        } else {
+          aValue = asText(aValue).toLowerCase();
+          bValue = asText(bValue).toLowerCase();
         }
 
         if (aValue < bValue) {
@@ -160,7 +180,7 @@ const ResultsTable = ({ results, onExport }) => {
 
   // Obtener regiones únicas
   const uniqueRegions = useMemo(() => {
-    const regions = results.map(r => r.contact_region).filter(Boolean);
+    const regions = results.map(r => asText(r.contact_region).trim()).filter(Boolean);
     return [...new Set(regions)].sort();
   }, [results]);
 
@@ -242,8 +262,8 @@ const ResultsTable = ({ results, onExport }) => {
                 onChange={(e) => setFilters(prev => ({ ...prev, minScore: parseFloat(e.target.value) }))}
                 className="w-full px-4 py-2 border-2 border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="0.7">Únicos (score ≥ 0.7)</option>
-                <option value="0">Mostrar posibles duplicados</option>
+                <option value="0.7">Mostrar solo mejores resultados</option>
+                <option value="0">Mostrar todos los resultados</option>
               </select>
             </div>
           </div>
@@ -387,16 +407,16 @@ const ResultsTable = ({ results, onExport }) => {
                             <Smile className="w-5 h-5 text-green-600" />
                           </div>
                           <span className="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                            {result.validation_score.toFixed(2)}
+                            {asNumber(result.validation_score).toFixed(2)}
                           </span>
                         </div>
-                      ) : result.validation_score >= 0.5 ? (
+                      ) : asNumber(result.validation_score) >= 0.5 ? (
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center">
                             <Meh className="w-5 h-5 text-yellow-600" />
                           </div>
                           <span className="px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">
-                            {result.validation_score.toFixed(2)}
+                            {asNumber(result.validation_score).toFixed(2)}
                           </span>
                         </div>
                       ) : (
@@ -405,7 +425,7 @@ const ResultsTable = ({ results, onExport }) => {
                             <Frown className="w-5 h-5 text-red-600" />
                           </div>
                           <span className="px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
-                            {result.validation_score.toFixed(2)}
+                            {asNumber(result.validation_score).toFixed(2)}
                           </span>
                         </div>
                       )}

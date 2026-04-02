@@ -26,7 +26,7 @@ INSERT INTO contacts (
     'Directora de Investigación',
     'ana.martinez@scoring.test',
     '+56 9 8765 4321',
-    'Metropolitana',
+    'Santiago',
     'https://uchile.cl/investigadores/ana-martinez',
     'web',
     '["Inteligencia Artificial", "Machine Learning"]'
@@ -84,7 +84,7 @@ INSERT INTO contacts (
     'Profesora Asociada',
     'maria.gonzalez@scoring.test',
     '+56 9 5432 1098',
-    'Metropolitana',  -- DUPLICADO: misma región que Ana
+    'Santiago',  -- DUPLICADO: misma región que Ana
     'https://uchile.cl/investigadores/maria-gonzalez',
     'web'
 );
@@ -122,7 +122,7 @@ INSERT INTO contacts (
     'Investigador Principal',
     'carlos.perez.uchile@scoring.test',
     '+56 9 4321 0987',
-    'Araucanía',
+    'La Araucanía',
     'https://uchile.cl/investigadores/carlos-perez',
     'web'
 );
@@ -141,7 +141,7 @@ INSERT INTO contacts (
     'Directora de Investigación',  -- DUPLICADO: misma position que #1
     'ana.martinez.usach@scoring.test',
     '+56 9 3210 9876',
-    'Metropolitana',  -- DUPLICADO: misma región que #1
+    'Santiago',  -- DUPLICADO: misma región que #1
     'https://usach.cl/investigadores/ana-martinez',
     'web'
 );
@@ -200,7 +200,7 @@ INSERT INTO contacts (
     'Profesor Asistente',
     'fernando.nunez@scoring.test',
     '+56 9 0987 6543',
-    'Metropolitana',  -- DUPLICADO: misma región que Ana (#1)
+    'Santiago',  -- DUPLICADO: misma región que Ana (#1)
     'https://uach.cl/investigadores/fernando-nunez',
     'web'
 );
@@ -238,7 +238,7 @@ INSERT INTO contacts (
     'Directora de Investigación',  -- DUPLICADO (sí, dice "Directora" pero es el mismo cargo)
     'andres.rojas@scoring.test',
     '+56 9 8765 4322',
-    'Metropolitana',  -- DUPLICADO
+    'Santiago',  -- DUPLICADO
     'https://uchile.cl/investigadores/andres-rojas',
     'web'
 );
@@ -296,7 +296,7 @@ INSERT INTO contacts (
     'Directora de Investigación',  -- DUPLICADO: position
     'ana.martinez.duplicada@scoring.test',
     '+56 9 8765 4321',  -- DUPLICADO: phone
-    'Metropolitana',  -- DUPLICADO: región (5 coincidencias!)
+    'Santiago',  -- DUPLICADO: región (5 coincidencias!)
     'https://uchile.cl/investigadores/ana-martinez-dup',
     'web'
 );

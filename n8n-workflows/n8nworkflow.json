@@ -11,10 +11,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        -1488,
-        288
+        4240,
+        8576
       ],
-      "id": "23689451-79a5-4515-b6e4-de15b8462de2",
+      "id": "bcbd7779-5f36-43c2-b189-6048ef13f5bf",
       "name": "Webhook",
       "webhookId": "73b7ea17-e25e-4e57-9fa3-91a84ad05d3d"
     },
@@ -25,10 +25,10 @@
       "type": "n8n-nodes-base.stopAndError",
       "typeVersion": 1,
       "position": [
-        -960,
-        384
+        4912,
+        8624
       ],
-      "id": "e5217896-5196-4d52-b7e4-2c460b38a131",
+      "id": "18a14323-8769-466f-95a7-dde5bb307f0b",
       "name": "Stop and Error"
     },
     {
@@ -38,10 +38,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -960,
-        192
+        4912,
+        8432
       ],
-      "id": "10e5a991-ab16-4ade-9133-e85f80ec3cd8",
+      "id": "34fc3a5b-e66a-4949-9bef-c19305fdf730",
       "name": "Build Search Query"
     },
     {
@@ -79,208 +79,13 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -752,
-        192
+        5136,
+        8432
       ],
-      "id": "37949d66-2185-4576-9c4b-1e62ed4037f0",
+      "id": "55246d27-a97b-46ca-9960-7b4c639e827d",
       "name": "Google Custom Search API",
       "retryOnFail": true,
       "waitBetweenTries": 2000
-    },
-    {
-      "parameters": {
-        "amount": 3
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        128,
-        336
-      ],
-      "id": "f30b1377-b077-43f0-a487-a110f8fbf51c",
-      "name": "Wait",
-      "webhookId": "f35059f5-3443-4c71-b0f4-8eecc1160884"
-    },
-    {
-      "parameters": {
-        "options": {
-          "reset": false
-        }
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        16,
-        192
-      ],
-      "id": "ba30776c-0410-47e0-920d-96f48e11587f",
-      "name": "Loop Over Items"
-    },
-    {
-      "parameters": {
-        "url": "={{$json.preservedLink}}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "User-Agent",
-              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            },
-            {
-              "name": "Accept",
-              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
-            },
-            {
-              "name": "Accept-Language",
-              "value": "es-CL,es;q=0.9,en;q=0.8"
-            },
-            {
-              "name": "Accept-Encoding",
-              "value": "gzip, deflate, br"
-            },
-            {
-              "name": "DNT",
-              "value": "1"
-            },
-            {
-              "name": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "name": "Upgrade-Insecure-Requests",
-              "value": "1"
-            },
-            {
-              "name": "Sec-Fetch-Dest",
-              "value": "document"
-            },
-            {
-              "name": "Sec-Fetch-Mode",
-              "value": "navigate"
-            },
-            {
-              "name": "Sec-Fetch-Site",
-              "value": "none"
-            },
-            {
-              "name": "Sec-Fetch-User",
-              "value": "?1"
-            },
-            {
-              "name": "Cache-Control",
-              "value": "max-age=0"
-            },
-            {
-              "name": "Referer",
-              "value": "https://www.google.com/"
-            }
-          ]
-        },
-        "options": {
-          "allowUnauthorizedCerts": true,
-          "redirect": {
-            "redirect": {
-              "maxRedirects": 5
-            }
-          },
-          "response": {
-            "response": {
-              "responseFormat": "text"
-            }
-          },
-          "timeout": 15000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        432,
-        336
-      ],
-      "id": "4753cb3e-7aea-4ecb-b0b7-9f21810ddd58",
-      "name": "HTTP Request",
-      "retryOnFail": true,
-      "maxTries": 2,
-      "waitBetweenTries": 1500,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "operation": "extractHtmlContent",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "names",
-              "cssSelector": ".name, .contact-name, .member-name, h1.person-name, h2.profile-name, [itemprop='name'], .doctor-name, .professional-name, .staff-name, .team-member-name, h1[itemprop='name'], h2[itemprop='name'], .profile-header h1, .profile-header h2, .medico-nombre, .profesional-nombre",
-              "returnArray": true
-            },
-            {
-              "key": "emails",
-              "cssSelector": "a[href^='mailto:'], [itemprop='email'], .email, .correo, .contact-email",
-              "returnArray": true
-            },
-            {
-              "key": "phones",
-              "cssSelector": "a[href^='tel:'], [itemprop='telephone'], .phone, .telefono, .tel, .fono, .contact-phone, .contact-tel",
-              "returnArray": true
-            },
-            {
-              "key": "organizations",
-              "cssSelector": ".company, .organization, .empresa, [itemprop='organization']",
-              "returnArray": true
-            },
-            {
-              "key": "positions",
-              "cssSelector": ".position, .title, .role, .cargo, .job-title",
-              "returnArray": true
-            },
-            {
-              "key": "link",
-              "skipSelectors": "={{$item(0).$node[\"Loop Over Items\"].json.link}}",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.html",
-      "typeVersion": 1.2,
-      "position": [
-        1136,
-        384
-      ],
-      "id": "87331faa-31ac-4a88-b08e-af1b27e3517e",
-      "name": "Data Extract",
-      "alwaysOutputData": false,
-      "retryOnFail": true,
-      "waitBetweenTries": 4,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\nconst allContacts = [];\n\n// Patrones regex\nconst emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\nconst phoneRegex = /(\\+?56\\s?)?([2-9]\\d{8})|(\\(\\d{2,3}\\)\\s?\\d{6,8})/g;\n\nitems.forEach(item => {\n  const html = item.json.body || '';\n  const metadata = {\n    sourceUrl: item.json.url,\n    area: item.json.area,\n    region: item.json.region,\n    searchId: item.json.searchId\n  };\n  \n  // Buscar bloques de contacto en HTML\n  const contactPatterns = [\n    /<article[^>]*class=\"[^\"]*contact[^\"]*\"[^>]*>[\\s\\S]*?<\\/article>/gi,\n    /<div[^>]*class=\"[^\"]*member[^\"]*\"[^>]*>[\\s\\S]*?<\\/div>/gi,\n    /<li[^>]*class=\"[^\"]*profile[^\"]*\"[^>]*>[\\s\\S]*?<\\/li>/gi,\n    /<section[^>]*class=\"[^\"]*team[^\"]*\"[^>]*>[\\s\\S]*?<\\/section>/gi\n  ];\n  \n  let contactBlocks = [];\n  contactPatterns.forEach(pattern => {\n    const matches = html.match(pattern) || [];\n    contactBlocks = contactBlocks.concat(matches);\n  });\n  \n  // Si no hay bloques estructurados, dividir por párrafos grandes\n  if (contactBlocks.length === 0) {\n    contactBlocks = html.split(/<\\/p>|<br\\s*\\/?>/i)\n      .filter(block => block.length > 100);\n  }\n  \n  // Extraer también de los datos ya parseados por HTML Extract\n  const extractedData = item.json;\n  const names = extractedData.names || [];\n  const emails = extractedData.emails || [];\n  const phones = extractedData.phones || [];\n  const organizations = extractedData.organizations || [];\n  const positions = extractedData.positions || [];\n  \n  // Procesar bloques de contacto\n  contactBlocks.forEach((block, index) => {\n    // Extraer emails del bloque\n    const blockEmails = [...new Set(block.match(emailRegex) || [])];\n    \n    // Extraer teléfonos del bloque\n    const blockPhones = [...new Set(block.match(phoneRegex) || [])];\n    \n    // Extraer nombre (buscar patrones comunes)\n    const nameMatch = block.match(/<h[1-3][^>]*>([^<]+)<\\/h[1-3]>/) ||\n                     block.match(/class=\"name[^\"]*\">([^<]+)</i) ||\n                     block.match(/>\\s*([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3})\\s*</);\n    const name = nameMatch ? nameMatch[1].trim() : (names[index] || null);\n    \n    // Extraer organización\n    const orgMatch = block.match(/class=\"company[^\"]*\">([^<]+)</i) ||\n                    block.match(/class=\"organization[^\"]*\">([^<]+)</i);\n    const organization = orgMatch ? orgMatch[1].trim() : (organizations[index] || null);\n    \n    // Extraer cargo\n    const posMatch = block.match(/class=\"position[^\"]*\">([^<]+)</i) ||\n                    block.match(/class=\"title[^\"]*\">([^<]+)</i);\n    const position = posMatch ? posMatch[1].trim() : (positions[index] || null);\n    \n    // Crear contacto si tiene al menos email o teléfono\n    blockEmails.forEach(email => {\n      allContacts.push({\n        contact_name: name,\n        contact_email: email,\n        contact_phone: blockPhones[0] || null,\n        organization: organization,\n        position: position,\n        contact_area: metadata.area,\n        contact_region: metadata.region,\n        source_url: metadata.sourceUrl,\n        search_id: metadata.searchId,\n        extraction_method: 'block_parsing'\n      });\n    });\n    \n    // Si hay teléfono pero no email, igual agregarlo\n    if (blockPhones.length > 0 && blockEmails.length === 0) {\n      allContacts.push({\n        contact_name: name,\n        contact_email: null,\n        contact_phone: blockPhones[0],\n        organization: organization,\n        position: position,\n        contact_area: metadata.area,\n        contact_region: metadata.region,\n        source_url: metadata.sourceUrl,\n        search_id: metadata.searchId,\n        extraction_method: 'block_parsing'\n      });\n    }\n  });\n  \n  // Fallback: usar datos extraídos por Cheerio si no se encontraron bloques\n  if (allContacts.length === 0 && emails.length > 0) {\n    emails.forEach((email, idx) => {\n      allContacts.push({\n        contact_name: names[idx] || null,\n        contact_email: email.replace('mailto:', ''),\n        contact_phone: phones[idx] || null,\n        organization: organizations[idx] || null,\n        position: positions[idx] || null,\n        contact_area: metadata.area,\n        contact_region: metadata.region,\n        source_url: metadata.sourceUrl,\n        search_id: metadata.searchId,\n        extraction_method: 'cheerio_extract'\n      });\n    });\n  }\n});\n\n// Retornar todos los contactos encontrados\nreturn allContacts.map(contact => ({ json: contact }));"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        496,
-        192
-      ],
-      "id": "8f0a66d4-fc42-48dc-9f2f-04175f277994",
-      "name": "Regex Data Extractor"
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\n\nitems.forEach(item => {\n  const data = item.json;\n  \n  // ===== NORMALIZACIÓN DE EMAIL =====\n  if (data.contact_email) {\n    data.contact_email = data.contact_email\n      .toLowerCase()\n      .trim()\n      .replace(/\\s+/g, '')\n      .replace('mailto:', '')\n      .replace(/[<>]/g, '');\n    \n    // Validar formato email\n    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\n    if (!emailRegex.test(data.contact_email)) {\n      data.contact_email = null;\n      data.validation_notes = (data.validation_notes || '') + 'Email inválido. ';\n    }\n    \n    // Excluir emails genéricos\n    const genericEmails = ['info@', 'contacto@', 'ventas@', 'contact@', 'hello@', 'hola@'];\n    if (genericEmails.some(generic => data.contact_email?.startsWith(generic))) {\n      data.is_generic_email = true;\n    }\n  }\n  \n  // ===== NORMALIZACIÓN DE TELÉFONO =====\n  if (data.contact_phone) {\n    data.contact_phone = data.contact_phone\n      .replace(/\\s+/g, '')\n      .replace(/[()-]/g, '')\n      .replace(/^tel:/, '')\n      .trim();\n    \n    // Agregar código de país Chile si no existe\n    if (data.contact_phone.match(/^[2-9]\\d{8}$/)) {\n      data.contact_phone = '+56' + data.contact_phone;\n    } else if (data.contact_phone.match(/^56[2-9]\\d{8}$/)) {\n      data.contact_phone = '+' + data.contact_phone;\n    }\n    \n    // Validar formato chileno\n    const phoneRegex = /^\\+56[2-9]\\d{8}$/;\n    if (!phoneRegex.test(data.contact_phone)) {\n      data.contact_phone = null;\n      data.validation_notes = (data.validation_notes || '') + 'Teléfono inválido. ';\n    }\n  }\n  \n  // ===== NORMALIZACIÓN DE NOMBRE =====\n  if (data.contact_name) {\n    data.contact_name = data.contact_name\n      .trim()\n      .replace(/\\s+/g, ' ')\n      .replace(/[^\\w\\sáéíóúñÁÉÍÓÚÑ.-]/gi, '')\n      .slice(0, 150); // Limitar longitud\n    \n    // Capitalizar correctamente\n    data.contact_name = data.contact_name\n      .split(' ')\n      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())\n      .join(' ');\n    \n    // Validar que no sea solo una palabra (probablemente solo apellido)\n    if (data.contact_name.split(' ').length < 2) {\n      data.validation_notes = (data.validation_notes || '') + 'Nombre incompleto. ';\n    }\n  }\n  \n  // ===== NORMALIZACIÓN DE ORGANIZACIÓN =====\n  if (data.organization) {\n    data.organization = data.organization\n      .trim()\n      .replace(/\\s+/g, ' ')\n      .slice(0, 200);\n  }\n  \n  // ===== NORMALIZACIÓN DE CARGO =====\n  if (data.position) {\n    data.position = data.position\n      .trim()\n      .replace(/\\s+/g, ' ')\n      .slice(0, 150);\n  }\n  \n  // ===== NORMALIZACIÓN DE REGIÓN =====\n  if (data.contact_region) {\n    // Mapeo de regiones chilenas\n    const regionMapping = {\n      'I': 'I', 'arica': 'I', 'tarapaca': 'I',\n      'II': 'II', 'antofagasta': 'II',\n      'III': 'III', 'atacama': 'III',\n      'IV': 'IV', 'coquimbo': 'IV',\n      'V': 'V', 'valparaiso': 'V', 'valparaíso': 'V',\n      'VI': 'VI', 'ohiggins': 'VI', \"o'higgins\": 'VI',\n      'VII': 'VII', 'maule': 'VII',\n      'VIII': 'VIII', 'biobio': 'VIII', 'bío bío': 'VIII',\n      'IX': 'IX', 'araucania': 'IX', 'araucanía': 'IX',\n      'X': 'X', 'los lagos': 'X',\n      'XI': 'XI', 'aysen': 'XI', 'aysén': 'XI',\n      'XII': 'XII', 'magallanes': 'XII',\n      'RM': 'RM', 'metropolitana': 'RM', 'santiago': 'RM',\n      'XIV': 'XIV', 'los rios': 'XIV', 'los ríos': 'XIV',\n      'XV': 'XV', 'arica y parinacota': 'XV',\n      'XVI': 'XVI', 'ñuble': 'XVI', 'nuble': 'XVI'\n    };\n    \n    const normalized = data.contact_region.toLowerCase().trim();\n    data.contact_region = regionMapping[normalized] || data.contact_region;\n  }\n  \n  // ===== CÁLCULO DE VALIDATION SCORE =====\n  data.validation_score = calculateValidationScore(data);\n  \n  // ===== LIMPIEZA DE URL =====\n  if (data.source_url) {\n    // Remover parámetros de tracking\n    try {\n      const url = new URL(data.source_url);\n      url.searchParams.delete('utm_source');\n      url.searchParams.delete('utm_medium');\n      url.searchParams.delete('utm_campaign');\n      url.searchParams.delete('fbclid');\n      data.source_url = url.toString();\n    } catch (e) {\n      // Si falla, mantener URL original\n    }\n  }\n  \n  // ===== TIMESTAMP =====\n  data.found_at = new Date().toISOString();\n  data.processed_at = new Date().toISOString();\n});\n\n// Función auxiliar para calcular score de validación\nfunction calculateValidationScore(data) {\n  let score = 0.5; // Score base\n  \n  // Email presente y válido\n  if (data.contact_email && !data.is_generic_email) {\n    score += 0.25;\n  } else if (data.is_generic_email) {\n    score += 0.1;\n  }\n  \n  // Teléfono presente y válido\n  if (data.contact_phone) {\n    score += 0.15;\n  }\n  \n  // Nombre completo presente\n  if (data.contact_name && data.contact_name.split(' ').length >= 2) {\n    score += 0.1;\n  }\n  \n  // Organización presente\n  if (data.organization && data.organization.length > 3) {\n    score += 0.05;\n  }\n  \n  // Cargo presente\n  if (data.position && data.position.length > 3) {\n    score += 0.05;\n  }\n  \n  // Región coincide con búsqueda\n  if (data.contact_region) {\n    score += 0.03;\n  }\n  \n  // Área coincide con búsqueda\n  if (data.contact_area) {\n    score += 0.02;\n  }\n  \n  // Método de extracción confiable\n  if (data.extraction_method === 'block_parsing') {\n    score += 0.05;\n  }\n  \n  // Limitar entre 0 y 1\n  return Math.min(Math.max(score, 0), 1.0);\n}\n\nreturn items;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        656,
-        192
-      ],
-      "id": "d4c81d73-8698-437e-92c1-c2ab14fadb4e",
-      "name": "Data Normalization"
     },
     {
       "parameters": {
@@ -329,38 +134,12 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -1168,
-        288
+        4688,
+        8576
       ],
-      "id": "639f2c10-cbda-47b7-aa65-411bb2f52ed6",
+      "id": "403711b2-b561-467d-9204-bc9edf739c40",
       "name": "IF Data is Valid",
       "alwaysOutputData": false
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\n\n// Filtrar solo items sin error\nconst valid = items.filter(item => {\n  // Si tiene data o body, es válido\n  return item.json.data || item.json.body;\n});\n\n// Si no hay items válidos, retornar array vacío pero continuar\nif (valid.length === 0) {\n  return [];\n}\n\nreturn valid;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        336,
-        192
-      ],
-      "id": "e282ac06-dc23-48ef-8ca5-c66ff0539462",
-      "name": "Data Filter"
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\nconst contacts = [];\nconst seenContacts = new Set();\n\nitems.forEach(item => {\n  if (item.json.error) return;\n  \n  // Limpiar y validar emails\n  let emails = (item.json.emails || [])\n    .map(e => e.replace(/mailto:/gi, '').trim().toLowerCase())\n    .filter(e => {\n      return e && \n             e.includes('@') && \n             e.includes('.') && \n             e.length > 5 &&\n             e.length < 100 &&\n             /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(e);\n    });\n  \n  // Limpiar y validar teléfonos\n  let phones = (item.json.phones || [])\n    .map(p => {\n      return p.replace(/\\[.*?\\]/g, '')\n              .replace(/[^\\d\\s\\+\\-\\(\\)]/g, '')\n              .trim();\n    })\n    .filter(p => {\n      const digits = p.replace(/\\D/g, '');\n      return digits.length >= 8 && digits.length <= 15;\n    });\n  \n  // Limpiar nombres\n  let names = (item.json.names || [])\n    .map(n => n.trim())\n    .filter(n => {\n      const words = n.split(/\\s+/);\n      return words.length >= 2 && \n             words.length <= 6 && \n             n.length > 5 && \n             n.length < 100 &&\n             /^[A-Za-zÀ-ÿ\\s\\.]+$/.test(n);\n    });\n  \n  // ← AQUÍ ESTÁ EL CAMBIO CLAVE\n  const sourceUrl = item.json.link || '';\n  const organization = item.json.source || item.json.title || '';\n  const searchId = item.json.searchId || '80';\n  \n  // Solo procesar si hay datos útiles\n  if (names.length === 0 && emails.length === 0 && phones.length === 0) {\n    return;\n  }\n  \n  // Si hay nombres de personas\n  if (names.length > 0) {\n    names.forEach(name => {\n      const contactKey = `${name.toLowerCase()}_${emails[0] || 'no-email'}`;\n      \n      if (!seenContacts.has(contactKey)) {\n        seenContacts.add(contactKey);\n        \n        contacts.push({\n          name: name,\n          email: emails[0] || null,\n          phone: phones[0] || null,\n          organization: organization,\n          source_url: sourceUrl,\n          searchId: searchId\n        });\n      }\n    });\n  } else {\n    // Sin nombres - Es una EMPRESA\n    const contactKey = `empresa_${emails[0] || phones[0] || sourceUrl}`;\n    \n    if (!seenContacts.has(contactKey)) {\n      seenContacts.add(contactKey);\n      \n      contacts.push({\n        name: organization,  // ← Nombre de la empresa como \"name\"\n        email: emails[0] || null,\n        phone: phones[0] || null,\n        organization: organization,\n        source_url: sourceUrl,\n        searchId: searchId\n      });\n    }\n  }\n});\n\nif (contacts.length === 0) {\n  return [{ json: { noContactsFound: true, searchId: '80' }}];\n}\n\nreturn contacts.map(c => ({ json: c }));"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        176,
-        192
-      ],
-      "id": "03dce6e7-ed71-45f5-b416-3357f8696e19",
-      "name": "Data Cleaning"
     },
     {
       "parameters": {
@@ -369,429 +148,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1328,
-        288
+        4464,
+        8576
       ],
-      "id": "dc0d3a83-25e7-4a9e-a96c-8cdcb9dfa2a4",
+      "id": "31b91048-124b-439b-ae0a-3e9d8d45175e",
       "name": "Data Structure"
     },
     {
       "parameters": {
-        "jsCode": "const items = $input.all();\nconst item = items[0].json;\n\nlet html = item.data || item.body || item || '';\n\n// Detectar META REFRESH\nif (typeof html === 'string' && html.includes('META HTTP-EQUIV')) {\n  const match = html.match(/CONTENT=\".*?URL=(.*?)\"/i);\n  if (match && match[1]) {\n    const redirectUrl = match[1].trim();\n    \n    // Retornar señal de redirect\n    return [{\n      json: {\n        needsRedirect: true,\n        redirectUrl: redirectUrl,\n        link: item.link,\n        title: item.title,\n        searchId: item.searchId\n      }\n    }];\n  }\n}\n\n// No hay redirect, preservar data normal\nreturn [{\n  json: {\n    data: html,\n    needsRedirect: false,\n    link: item.link,\n    title: item.title,\n    searchId: item.searchId\n  }\n}];"
+        "jsCode": "// ==================== PARSER MEJORADO - AUTO-DETECT ESTRUCTURA ====================\n\ntry {\n  let inputData = $input.all();\n  \n  // Si inputData está vacío o no tiene items, intentar extraer del primer objeto\n  if (!inputData || inputData.length === 0) {\n    return [{ json: { items: [] } }];\n  }\n\n  // DEBUG: Ver qué estructura tiene el input\n  const firstItem = inputData[0];\n  let itemsToProcess = [];\n\n  // Intenta detectar dónde están realmente los datos\n  if (firstItem.json && Array.isArray(firstItem.json)) {\n    // Si json es directamente un array\n    itemsToProcess = firstItem.json;\n  } else if (firstItem.json && Array.isArray(firstItem.json.items)) {\n    // Si json tiene un campo \"items\"\n    itemsToProcess = firstItem.json.items;\n  } else if (firstItem.json && Array.isArray(firstItem.json.organic_results)) {\n    // Si es de SerpAPI directamente\n    itemsToProcess = firstItem.json.organic_results;\n  } else if (Array.isArray(firstItem.json)) {\n    // Intenta directamente\n    itemsToProcess = firstItem.json;\n  } else {\n    // Si firstItem.json es un objeto individual\n    itemsToProcess = inputData.map(item => item.json);\n  }\n\n  // Si aún está vacío\n  if (!itemsToProcess || itemsToProcess.length === 0) {\n    return [{ json: { items: [], debug: \"No se encontraron datos para procesar\" } }];\n  }\n\n  // ==================== MAPEO REGIONES CHILE ====================\n  const regionKeywords = {\n    \"Arica y Parinacota\": [\"arica y parinacota\", \"arica\", \"parinacota\"],\n    \"Tarapacá\": [\"tarapacá\", \"tarapaca\", \"iquique\"],\n    \"Antofagasta\": [\"antofagasta\"],\n    \"Atacama\": [\"atacama\", \"copiapó\", \"copiapo\"],\n    \"Coquimbo\": [\"coquimbo\", \"la serena\"],\n    \"Valparaíso\": [\"valparaíso\", \"valparaiso\", \"viña\", \"quilpué\", \"concón\"],\n    \"Santiago\": [\"santiago\", \"metropolitana\", \"rm\", \"ñuñoa\"],\n    \"O'Higgins\": [\"o'higgins\", \"ohiggins\", \"rancagua\"],\n    \"Maule\": [\"maule\", \"talca\"],\n    \"Ñuble\": [\"ñuble\", \"nuble\", \"chillán\", \"chillan\"],\n    \"Biobío\": [\"biobío\", \"biobio\", \"bío bío\", \"bio bio\", \"concepción\", \"concepcion\"],\n    \"La Araucanía\": [\"la araucanía\", \"la araucania\", \"araucanía\", \"araucania\", \"temuco\"],\n    \"Los Ríos\": [\"los ríos\", \"los rios\", \"valdivia\"],\n    \"Los Lagos\": [\"los lagos\", \"puerto montt\"],\n    \"Aysén\": [\"aysén\", \"aysen\", \"coihaique\", \"coyhaique\"],\n    \"Magallanes\": [\"magallanes\", \"punta arenas\"],\n  };\n\n  const results = [];\n\n  // Procesar cada item\n  for (let idx = 0; idx < itemsToProcess.length; idx++) {\n    const item = itemsToProcess[idx];\n\n    // Validar datos básicos\n    if (!item.link && !item.title) {\n      continue;\n    }\n\n    // Detectar región\n    let regionInferred = \"Sin especificar\";\n    const searchText = ((item.snippet || \"\") + \" \" + (item.title || \"\") + \" \" + (item.link || \"\")).toLowerCase();\n\n    for (const [region, regionKeywordsList] of Object.entries(regionKeywords)) {\n      let found = false;\n      for (const keyword of regionKeywordsList) {\n        if (searchText.includes(keyword.toLowerCase())) {\n          regionInferred = region;\n          found = true;\n          break;\n        }\n      }\n      if (found) break;\n    }\n\n    // Construir resultado\n    results.push({\n      metadata: {\n        title: item.title || null,\n        link: item.link || null,\n        snippet: item.snippet || null,\n        source: item.source || null,\n        position: item.position || null,\n      },\n      region: regionInferred,\n      search_id: null,\n      keywords: null,\n      processed: false,\n      html_content: null,\n      contact_data: null,\n    });\n  }\n\n  return [{ json: { items: results, count: results.length } }];\n\n} catch (err) {\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  }\n  return [{ json: { items: [], error: errorMsg } }];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        576,
-        336
+        5360,
+        8432
       ],
-      "id": "dcc85a1c-1008-4ff1-914e-6fd661608c48",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "loose",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "8fdfc53b-2617-49ae-a597-7a3d610db987",
-              "leftValue": "={{$json.needsRedirect}}",
-              "rightValue": "true",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "looseTypeValidation": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        704,
-        336
-      ],
-      "id": "e873045d-2985-4e9f-ac42-c1ff01c31a39",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "url": "={{$json.redirectUrl}}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "User-Agent",
-              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            },
-            {
-              "name": "Accept",
-              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
-            },
-            {
-              "name": "Accept-Language",
-              "value": "es-CL,es;q=0.9,en;q=0.8"
-            },
-            {
-              "name": "Accept-Encoding",
-              "value": "gzip, deflate, br"
-            },
-            {
-              "name": "DNT",
-              "value": "1"
-            },
-            {
-              "name": "Connection",
-              "value": "keep-alive"
-            },
-            {
-              "name": "Upgrade-Insecure-Requests",
-              "value": "1"
-            },
-            {
-              "name": "Sec-Fetch-Dest",
-              "value": "document"
-            },
-            {
-              "name": "Sec-Fetch-Mode",
-              "value": "navigate"
-            },
-            {
-              "name": "Sec-Fetch-Site",
-              "value": "none"
-            },
-            {
-              "name": "Sec-Fetch-User",
-              "value": "?1"
-            },
-            {
-              "name": "Cache-Control",
-              "value": "max-age=0"
-            },
-            {
-              "name": "Referer",
-              "value": "https://www.google.com/"
-            }
-          ]
-        },
-        "options": {
-          "allowUnauthorizedCerts": true,
-          "redirect": {
-            "redirect": {
-              "maxRedirects": 5
-            }
-          },
-          "response": {
-            "response": {
-              "responseFormat": "text"
-            }
-          },
-          "timeout": 15000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        864,
-        336
-      ],
-      "id": "ed877902-6fa1-4128-8d27-842de2acd468",
-      "name": "HTTP Request2",
-      "retryOnFail": true,
-      "maxTries": 2,
-      "waitBetweenTries": 1500,
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\n\nreturn items.map(item => ({\n  json: {\n    link: item.json.link,\n    title: item.json.title,\n    source: item.json.source || '',  // ← IMPORTANTE: Preservar source\n    searchId: item.json.searchId || '80'\n  }\n}));"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -336,
-        192
-      ],
-      "id": "2e6f62c6-75c1-462b-a953-de11f7d145a8",
-      "name": "Code in JavaScript1",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\n\nconst organicResults = items[0].json.organic_results || [];\nconst searchId = items[0].json.searchId || items[0].json.body?.search_id;\n\n// Si no hay resultados\nif (organicResults.length === 0) {\n  return [{\n    json: {\n      noResults: true,\n      searchId: searchId\n    }\n  }];\n}\n\n// Convertir resultados - FILTRAR AQUÍ para excluir ofertas de trabajo\nconst results = organicResults\n  .filter(result => {\n    const link = result.link || '';\n    const title = result.title || '';\n    const snippet = result.snippet || '';\n    \n    // Texto combinado para buscar patrones\n    const text = `${link} ${title} ${snippet}`.toLowerCase();\n    \n    // EXCLUIR ofertas de trabajo y páginas de admisión\n    const excludePatterns = [\n      'vacante', 'oferta', 'postular', 'postula', 'postúlate', 'inicia', 'iniciar', 'importante', 'postulación',\n      'admisión', 'estudia', 'pregrado', 'matrícula'\n    ];\n    \n    return !excludePatterns.some(pattern => text.includes(pattern));\n  })\n  .map(result => ({\n    json: {\n      title: result.title,\n      link: result.link,\n      snippet: result.snippet || '',\n      source: result.source || '',\n      searchId: searchId\n    }\n  }));\n\n// Si después del filtro no hay resultados\nif (results.length === 0) {\n  return [{\n    json: {\n      noResults: true,\n      searchId: searchId\n    }\n  }];\n}\n\nreturn results;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -544,
-        192
-      ],
-      "id": "f979a182-4f3b-444e-a580-8ffeeb42a2f5",
-      "name": "Parser"
-    },
-    {
-      "parameters": {
-        "jsCode": "const extractedData = items[0].json;\n\nreturn [{\n  json: {\n    names: extractedData.names || [],\n    emails: extractedData.emails || [],\n    phones: extractedData.phones || [],\n    organizations: extractedData.organizations || [],\n    positions: extractedData.positions || [],\n    link: extractedData.preservedLink || '',\n    source: extractedData.preservedSource || '',\n    searchId: extractedData.preservedSearchId || ''\n  }\n}];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1280,
-        384
-      ],
-      "id": "e1caa5ad-fbc3-456c-98eb-2fd0e605dbd3",
-      "name": "Code in JavaScript2"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "0eb9cbae-3eaf-4851-8f87-a0bc0121843c",
-              "name": "preservedLink",
-              "value": "={{$json.link}}",
-              "type": "string"
-            },
-            {
-              "id": "319d7ffa-cf01-416f-ab98-4d60ddf0e85f",
-              "name": "preservedSource",
-              "value": "={{$json.source}}",
-              "type": "string"
-            },
-            {
-              "id": "b3541676-447a-4ce9-b862-a84fddb9c456",
-              "name": "preservedSearchId",
-              "value": "={{$json.searchId}}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        288,
-        336
-      ],
-      "id": "1f1662eb-75f3-46ce-9249-4cce36ddc5ca",
-      "name": "Edit Fields"
-    },
-    {
-      "parameters": {
-        "options": {
-          "reset": false
-        }
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        80,
-        -144
-      ],
-      "id": "ca1e24dc-6da6-43d7-b5ce-ec3838c42850",
-      "name": "Loop Over Items1"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "18cea043-8860-46a9-a732-6f4987ebe48d",
-              "name": "metadata_title",
-              "value": "={{ $json.title }}",
-              "type": "string"
-            },
-            {
-              "id": "5e6c09cd-92f6-43b5-96b1-e54e5bca7622",
-              "name": "metadata_link",
-              "value": "={{ $json.link }}",
-              "type": "string"
-            },
-            {
-              "id": "d8e6c80b-0942-4461-8b3f-44881c5adcda",
-              "name": "metadata_source",
-              "value": "={{ $json.source }}",
-              "type": "string"
-            },
-            {
-              "id": "38fe7121-6007-4e03-b99d-b48d2d775c8b",
-              "name": "metadata_snippet",
-              "value": "={{ $json.snippet }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        288,
-        -48
-      ],
-      "id": "019ddc2e-a9c6-49d5-bb90-cda0165b4e66",
-      "name": "Edit Fields1"
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.metadata_link }}",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "User-Agent",
-              "value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-            },
-            {
-              "name": "Accept",
-              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
-            },
-            {
-              "name": "Accept-Language",
-              "value": "es-CL,es;q=0.9,en;q=0.8"
-            },
-            {
-              "name": "Accept-Encoding",
-              "value": "gzip, deflate"
-            },
-            {
-              "name": "Connection",
-              "value": "keep-alive"
-            }
-          ]
-        },
-        "options": {
-          "redirect": {
-            "redirect": {
-              "maxRedirects": 5
-            }
-          },
-          "response": {
-            "response": {
-              "neverError": true
-            }
-          },
-          "timeout": 30000
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        912,
-        0
-      ],
-      "id": "b67089a5-c87c-49fa-a641-3c2ad9bdf0f6",
-      "name": "HTTP Request1",
-      "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "mode": "runOnceForEachItem",
-        "jsCode": "// Extraer contactos - acceso robusto a metadata\nconst item = $input.item.json;\n\n// Acceder a metadata de diferentes fuentes posibles\nconst metadata_title = item.metadata_title || item.title || '';\nconst metadata_link = item.metadata_link || item.link || '';\nconst metadata_source = item.metadata_source || item.source || '';\nconst metadata_snippet = item.metadata_snippet || item.snippet || '';\n\nconst httpError = item.error || null;\nconst htmlContent = item.data || '';\nconst sourceUrl = metadata_link;\nconst snippetText = metadata_snippet;\n\n// Si no hay source_url, saltar (datos incompletos)\nif (!sourceUrl) {\n  return {\n    name: 'Desconocido',\n    organization: null,\n    position: null,\n    email: null,\n    phone: null,\n    region: null,\n    source_url: 'ERROR: No URL',\n    source_type: 'google_search',\n    research_lines: null,\n    is_valid: false,\n    validation_score: null,\n    is_linkedin: false,\n    scraping_error: 'Missing metadata'\n  };\n}\n\n// Detectar si es LinkedIn\nconst isLinkedIn = sourceUrl.includes('linkedin.com/in/');\n\n// Función para limpiar HTML\nfunction stripHtml(html) {\n  if (!html) return '';\n  return html\n    .replace(/<script\\b[^<]*(?:(?!<\\/script>)<[^<]*)*<\\/script>/gi, '')\n    .replace(/<style\\b[^<]*(?:(?!<\\/style>)<[^<]*)*<\\/style>/gi, '')\n    .replace(/<[^>]+>/g, ' ')\n    .replace(/\\s+/g, ' ')\n    .trim();\n}\n\n// Regex para extracción\nconst emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\nconst phoneRegex = /(\\+?56)?[\\s\\-]?[9]\\s?\\d{4}\\s?\\d{4}|\\(\\+?56\\)?[\\s\\-]?[29]\\s?\\d{4}\\s?\\d{4}|(\\+?56)?[\\s\\-]?[2]\\s?\\d{4}\\s?\\d{4}/g;\n\nlet name = '';\nlet organization = '';\nlet position = null;\nlet email = null;\nlet phone = null;\nlet region = null;\nlet researchLines = [];\n\n// PROCESAMIENTO ESPECIAL PARA LINKEDIN\nif (isLinkedIn) {\n  const titleParts = metadata_title.split(' - ');\n  name = titleParts[0]?.trim() || '';\n  position = titleParts[1]?.trim() || null;\n  \n  organization = 'LinkedIn';\n  \n  const snippetLower = snippetText.toLowerCase();\n  const experienceMatch = snippetText.match(/(\\d+)\\+?\\s*años?\\s*de\\s*experiencia/i);\n  if (experienceMatch) {\n    researchLines.push(`${experienceMatch[1]} años de experiencia`);\n  }\n  \n  const professions = ['ingeniero', 'arquitecto', 'doctor', 'abogado', 'profesor', 'analista', 'gerente', 'director'];\n  for (const prof of professions) {\n    if (snippetLower.includes(prof) && !position) {\n      position = prof.charAt(0).toUpperCase() + prof.slice(1);\n    }\n  }\n  \n  email = null;\n  phone = null;\n  \n} else {\n  // PROCESAMIENTO NORMAL\n  \n  // Extraer emails\n  const snippetEmails = snippetText.match(emailRegex) || [];\n  let htmlEmails = [];\n  if (!httpError && htmlContent) {\n    const textContent = stripHtml(htmlContent);\n    htmlEmails = textContent.match(emailRegex) || [];\n  }\n  const emails = [...new Set([...snippetEmails, ...htmlEmails])];\n  email = emails[0] || null;\n  \n  // Extraer teléfonos\n  const snippetPhones = snippetText.match(phoneRegex) || [];\n  let htmlPhones = [];\n  if (!httpError && htmlContent) {\n    const textContent = stripHtml(htmlContent);\n    htmlPhones = textContent.match(phoneRegex) || [];\n  }\n  const phones = [...new Set([...snippetPhones, ...htmlPhones])];\n  phone = phones[0] ? phones[0].replace(/\\s+/g, '').replace(/\\-/g, '') : null;\n  \n  // Extraer nombre del title\n  name = metadata_title;\n  name = name\n    .replace(/\\s*[-|]\\s*.*$/, '')\n    .replace(/\\(.*\\)/, '')\n    .replace(/Servicio|Contacto|Profesional|Buscar|Encuentra|Consultoría/gi, '')\n    .trim();\n  \n  // Organización del source\n  organization = metadata_source || null;\n  \n  // Extraer posición\n  const professionalKeywords = {\n    'doctor': 'Doctor', 'médico': 'Médico', 'ingeniero': 'Ingeniero',\n    'profesor': 'Profesor', 'abogado': 'Abogado', 'arquitecto': 'Arquitecto',\n    'contador': 'Contador', 'diseñador': 'Diseñador', 'programador': 'Programador',\n    'desarrollador': 'Desarrollador', 'consultor': 'Consultor', 'director': 'Director',\n    'gerente': 'Gerente', 'especialista': 'Especialista', 'técnico': 'Técnico',\n    'analista': 'Analista', 'coordinador': 'Coordinador'\n  };\n  \n  const snippetLower = snippetText.toLowerCase();\n  const titleLower = metadata_title.toLowerCase();\n  const combinedText = snippetLower + ' ' + titleLower;\n  \n  for (const [keyword, label] of Object.entries(professionalKeywords)) {\n    if (combinedText.includes(keyword)) {\n      position = label;\n      break;\n    }\n  }\n  \n  if (!position && combinedText.match(/experiencia|profesional|experto|especializado/)) {\n    position = 'Profesional';\n  }\n  \n  // Especialización\n  const technicalWords = snippetText.match(/\\b[A-ZÁÉÍÓÚÑ][a-záéíóúñ]{7,}\\b/g) || [];\n  const uniqueWords = [...new Set(technicalWords)]\n    .filter(w => !['Contacto', 'Dirección', 'Teléfono', 'Servicios', 'Santiago'].includes(w))\n    .slice(0, 3);\n  if (uniqueWords.length > 0) {\n    researchLines.push(...uniqueWords);\n  }\n}\n\n// Extraer región\nconst regionKeywords = {\n  'santiago': 'Santiago', 'providencia': 'Santiago', 'las condes': 'Santiago',\n  'valparaíso': 'Valparaíso', 'valparaiso': 'Valparaíso',\n  'concepción': 'Concepción', 'concepcion': 'Concepción',\n  'la serena': 'La Serena', 'viña del mar': 'Viña del Mar', 'vina del mar': 'Viña del Mar',\n  'temuco': 'Temuco', 'iquique': 'Iquique', 'antofagasta': 'Antofagasta',\n  'puerto montt': 'Puerto Montt', 'talca': 'Talca', 'arica': 'Arica', 'rancagua': 'Rancagua'\n};\n\nconst textForRegion = snippetText.toLowerCase();\nfor (const [key, value] of Object.entries(regionKeywords)) {\n  if (textForRegion.includes(key)) {\n    region = value;\n    break;\n  }\n}\n\nconst isValid = !!(email || phone);\n\nreturn {\n  name: name || organization || 'Desconocido',\n  organization: organization,\n  position: position,\n  email: email,\n  phone: phone,\n  region: region,\n  source_url: sourceUrl,\n  source_type: 'google_search',\n  research_lines: researchLines.length > 0 ? researchLines : null,\n  is_valid: isValid,\n  validation_score: null,\n  \n  // Metadata\n  title: metadata_title,\n  snippet: metadata_snippet,\n  is_linkedin: isLinkedIn,\n  scraping_error: httpError ? (httpError.message || 'Failed to fetch') : null\n};"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1120,
-        -64
-      ],
-      "id": "afea70dc-c2e1-4363-8a97-ad3c34f7b63a",
-      "name": "Code in JavaScript3"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Limpiar y validar todos los contactos extraídos\nconst items = $input.all();\nconst cleanedContacts = [];\n\nfor (const item of items) {\n  const contact = item.json;\n  \n  // Validar email\n  if (contact.email) {\n    const emailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/.test(contact.email);\n    if (!emailValid) contact.email = null;\n  }\n  \n  // Validar teléfono chileno\n  if (contact.phone) {\n    // Normalizar formato: +56912345678\n    let phone = contact.phone.replace(/\\s+/g, '').replace(/\\-/g, '');\n    if (!phone.startsWith('+56')) {\n      if (phone.startsWith('56')) phone = '+' + phone;\n      else if (phone.startsWith('9')) phone = '+56' + phone;\n    }\n    contact.phone = phone;\n  }\n  \n  // Validar que tenga al menos email o teléfono\n  if (!contact.email && !contact.phone) {\n    contact.is_valid = false;\n    contact.validation_score = 0.1;\n  }\n  \n  // Limpiar nombre (max 200 chars)\n  if (contact.name) {\n    contact.name = contact.name.substring(0, 200).trim();\n  }\n  \n  // Limpiar organization (max 200 chars)\n  if (contact.organization) {\n    contact.organization = contact.organization.substring(0, 200).trim();\n  }\n  \n  // Convertir research_lines a JSON string si existe\n  if (contact.research_lines && Array.isArray(contact.research_lines)) {\n    contact.research_lines = JSON.stringify(contact.research_lines);\n  }\n  \n  cleanedContacts.push({ json: contact });\n}\n\nreturn cleanedContacts;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        704,
-        -240
-      ],
-      "id": "cfbcf190-d59b-4292-a7c1-01010fd0a4b9",
-      "name": "Code in JavaScript4"
-    },
-    {
-      "parameters": {
-        "amount": 3
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        416,
-        -48
-      ],
-      "id": "38bfae50-5736-4b0d-825b-7fec1dc8bbaa",
-      "name": "Wait1",
-      "webhookId": "8f3ff461-6617-47a4-81d7-819da105660a"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Test de conectividad básica\nconst items = $input.all();\nconsole.log(`Total items to process: ${items.length}`);\n\n// Verificar primer item\nif (items.length > 0) {\n  const firstItem = items[0].json;\n  console.log(`First URL to scrape: ${firstItem.link}`);\n}\n\nreturn items;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -224,
-        -144
-      ],
-      "id": "c18c469e-2e12-456a-8f2e-8db42ff53f98",
-      "name": "Code in JavaScript5"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 3
-          },
-          "conditions": [
-            {
-              "id": "5a8afeb4-8c64-4996-a242-0fa42902eb0f",
-              "leftValue": "={{ $json.metadata_link }}",
-              "rightValue": "linkedin.com",
-              "operator": {
-                "type": "string",
-                "operation": "contains"
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.3,
-      "position": [
-        704,
-        -48
-      ],
-      "id": "49d658cc-1425-4353-8f42-812d781c0a63",
-      "name": "If1"
-    },
-    {
-      "parameters": {
-        "jsCode": "// ==================== PARSER MEJORADO - AUTO-DETECT ESTRUCTURA ====================\n\ntry {\n  let inputData = $input.all();\n  \n  // Si inputData está vacío o no tiene items, intentar extraer del primer objeto\n  if (!inputData || inputData.length === 0) {\n    return [{ json: { items: [] } }];\n  }\n\n  // DEBUG: Ver qué estructura tiene el input\n  const firstItem = inputData[0];\n  let itemsToProcess = [];\n\n  // Intenta detectar dónde están realmente los datos\n  if (firstItem.json && Array.isArray(firstItem.json)) {\n    // Si json es directamente un array\n    itemsToProcess = firstItem.json;\n  } else if (firstItem.json && Array.isArray(firstItem.json.items)) {\n    // Si json tiene un campo \"items\"\n    itemsToProcess = firstItem.json.items;\n  } else if (firstItem.json && Array.isArray(firstItem.json.organic_results)) {\n    // Si es de SerpAPI directamente\n    itemsToProcess = firstItem.json.organic_results;\n  } else if (Array.isArray(firstItem.json)) {\n    // Intenta directamente\n    itemsToProcess = firstItem.json;\n  } else {\n    // Si firstItem.json es un objeto individual\n    itemsToProcess = inputData.map(item => item.json);\n  }\n\n  // Si aún está vacío\n  if (!itemsToProcess || itemsToProcess.length === 0) {\n    return [{ json: { items: [], debug: \"No se encontraron datos para procesar\" } }];\n  }\n\n  // ==================== MAPEO REGIONES CHILE ====================\n  const regionKeywords = {\n    \"Arica y Parinacota\": [\"arica\", \"parinacota\", \"xv\"],\n    \"Tarapacá\": [\"tarapacá\", \"tarapaca\", \"i región\", \"iquique\"],\n    \"Antofagasta\": [\"antofagasta\", \"ii\"],\n    \"Atacama\": [\"atacama\", \"iii\", \"copiapó\"],\n    \"Coquimbo\": [\"coquimbo\", \"la serena\", \"iv\"],\n    \"Valparaíso\": [\"valparaíso\", \"valparaiso\", \"v región\", \"viña\", \"quilpué\", \"concón\"],\n    \"Metropolitana\": [\"santiago\", \"metropolitana\", \"rm\", \"ñuñoa\"],\n    \"Libertador General Bernardo O'Higgins\": [\"o'higgins\", \"ohiggins\", \"vi\"],\n    \"Maule\": [\"maule\", \"vii\", \"talca\"],\n    \"Ñuble\": [\"ñuble\", \"nuble\", \"viii\", \"chillán\"],\n    \"Bío Bío\": [\"bío bío\", \"bio bio\", \"concepción\"],\n    \"La Araucanía\": [\"araucanía\", \"araucania\", \"ix\"],\n    \"Los Ríos\": [\"los ríos\", \"los rios\", \"x\", \"valdivia\"],\n    \"Los Lagos\": [\"los lagos\", \"xi\", \"puerto montt\"],\n    \"Aysén\": [\"aysén\", \"aysen\", \"xii\"],\n    \"Magallanes\": [\"magallanes\", \"punta arenas\", \"xiii\"],\n  };\n\n  const results = [];\n\n  // Procesar cada item\n  for (let idx = 0; idx < itemsToProcess.length; idx++) {\n    const item = itemsToProcess[idx];\n\n    // Validar datos básicos\n    if (!item.link && !item.title) {\n      continue;\n    }\n\n    // Detectar región\n    let regionInferred = \"Sin especificar\";\n    const searchText = ((item.snippet || \"\") + \" \" + (item.title || \"\") + \" \" + (item.link || \"\")).toLowerCase();\n\n    for (const [region, regionKeywordsList] of Object.entries(regionKeywords)) {\n      let found = false;\n      for (const keyword of regionKeywordsList) {\n        if (searchText.includes(keyword.toLowerCase())) {\n          regionInferred = region;\n          found = true;\n          break;\n        }\n      }\n      if (found) break;\n    }\n\n    // Construir resultado\n    results.push({\n      metadata: {\n        title: item.title || null,\n        link: item.link || null,\n        snippet: item.snippet || null,\n        source: item.source || null,\n        position: item.position || null,\n      },\n      region: regionInferred,\n      search_id: null,\n      keywords: null,\n      processed: false,\n      html_content: null,\n      contact_data: null,\n    });\n  }\n\n  return [{ json: { items: results, count: results.length } }];\n\n} catch (err) {\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  }\n  return [{ json: { items: [], error: errorMsg } }];\n}"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -640,
-        496
-      ],
-      "id": "9f347a52-34f6-4ddc-9624-ad835413db13",
+      "id": "f2fbe179-3b03-4054-9895-ef9cb14c8711",
       "name": "Parser1"
     },
     {
@@ -801,23 +174,23 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -480,
-        496
+        5584,
+        8432
       ],
-      "id": "11bc0d32-7c7e-4755-b339-aa5a32761a18",
+      "id": "43286d55-6c54-4367-9c0e-dad43d509988",
       "name": "Link Classifier"
     },
     {
       "parameters": {
-        "jsCode": "try {\n  // Procesar TODOS los items que vienen del IF node\n  const allItems = $input.all();\n  \n  return allItems.map(itemWrapper => {\n    const item = itemWrapper.json;\n    const metadata = item.metadata;\n    const title = metadata.title;\n    const snippet = metadata.snippet;\n    const link = metadata.link;\n\n  // ==================== EXTRACCIÓN NOMBRE ====================\n  // Formato típico LinkedIn: \"Nombre Apellido - Cargo, experiencia...\"\n  \n  let name = null;\n  const nameMatch = title.match(/^([A-Za-záéíóúÁÉÍÓÚñÑ\\s]+?)(?:\\s*-|$)/);\n  if (nameMatch) {\n    name = nameMatch[1].trim();\n    // Limpiar si aún tiene ruido\n    if (name.length < 3 || name.toLowerCase().includes(\"error\")) {\n      name = null;\n    }\n  }\n\n  // ==================== EXTRACCIÓN CARGO ====================\n  // Buscar después del primer guión\n  let position = null;\n  const posMatch = title.match(/\\s*-\\s*([^,]+)/);\n  if (posMatch) {\n    position = posMatch[1].trim();\n    // Tomar solo la primera parte (antes de años de experiencia)\n    position = position.split(/[,·]/)[0].trim();\n    // Limitar a 50 caracteres\n    if (position.length > 50) {\n      position = position.split(/\\s+/).slice(0, 3).join(\" \");\n    }\n  }\n\n  // ==================== EMAIL & TELÉFONO ====================\n  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\n  const emails = snippet.match(emailRegex) || [];\n  const email = emails.length > 0 ? emails[0] : null;\n\n  const phoneRegex = /(\\+?56|0)?[\\s]?9[\\s]?[\\d]{4}[\\s]?[\\d]{4}|(\\+?56|0)?[\\s]?2[\\s]?[\\d]{4}[\\s]?[\\d]{4}/g;\n  const phones = snippet.match(phoneRegex) || [];\n  const phone = phones.length > 0 ? phones[0] : null;\n\n  // ==================== VALIDACIÓN ====================\n  // is_valid: true solo si tiene NOMBRE + (CARGO O EMAIL O TELÉFONO)\n  const isValid = !!(name && (position || email || phone));\n  \n  // validation_score será calculado en el Backend según criterios finales\n  // Aquí solo guardamos la información extraída\n    const validationScore = isValid ? 0.7 : 0; // Score temporal, Backend lo recalcula\n\n    return {\n      json: {\n        ...item,\n        processed: true,\n        contact_data: {\n          name: name || \"Desconocido\",\n          email: email,\n          phone: phone,\n          position: position,\n          organization: \"LinkedIn\",\n          region: item.region,\n          source_url: link,\n          source_type: \"LinkedIn\",\n          is_valid: isValid,\n          validation_score: validationScore,\n        },\n      },\n    };\n  });\n\n} catch (err) {\n  // Error general\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  } else {\n    errorMsg = String(err);\n  }\n  \n  return [{ json: { \n    contact_data: {\n      is_valid: false,\n      validation_score: 0,\n      scraping_source: \"error\",\n      scraping_error: errorMsg,\n    }\n  }}];\n}"
+        "jsCode": "try {\n  // Procesar TODOS los items que vienen del IF node\n  const allItems = $input.all();\n  \n  return allItems.map(itemWrapper => {\n    const item = itemWrapper.json;\n    const metadata = item.metadata;\n    const title = metadata.title;\n    const snippet = metadata.snippet;\n    const link = metadata.link;\n\n  // ==================== EXTRACCIÓN NOMBRE ====================\n  // Formato típico LinkedIn: \"Nombre Apellido - Cargo, experiencia...\"\n  \n  let name = null;\n  const nameMatch = title.match(/^([A-Za-záéíóúÁÉÍÓÚñÑ\\s]+?)(?:\\s*-|$)/);\n  if (nameMatch) {\n    name = nameMatch[1].trim();\n    // Limpiar si aún tiene ruido\n    if (name.length < 3 || name.toLowerCase().includes(\"error\")) {\n      name = null;\n    }\n  }\n\n  // ==================== EXTRACCIÓN CARGO ====================\n  // Buscar después del primer guión\n  let position = null;\n  const posMatch = title.match(/\\s*-\\s*([^,]+)/);\n  if (posMatch) {\n    position = posMatch[1].trim();\n    // Tomar solo la primera parte (antes de años de experiencia)\n    position = position.split(/[,·]/)[0].trim();\n    // Limitar a 50 caracteres\n    if (position.length > 50) {\n      position = position.split(/\\s+/).slice(0, 3).join(\" \");\n    }\n  }\n\n  // ==================== EMAIL & TELÉFONO ====================\n  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\n  const emails = snippet.match(emailRegex) || [];\n  const email = emails.length > 0 ? emails[0] : null;\n\n  const phoneRegex = /(\\+?56|0)?[\\s]?9[\\s]?[\\d]{4}[\\s]?[\\d]{4}|(\\+?56|0)?[\\s]?2[\\s]?[\\d]{4}[\\s]?[\\d]{4}/g;\n  const phones = snippet.match(phoneRegex) || [];\n  const phone = phones.length > 0 ? phones[0] : null;\n\n  // ==================== VALIDACIÓN ====================\n  // is_valid: true solo si tiene NOMBRE + (CARGO O EMAIL O TELÉFONO)\n  const isValid = !!(name && (position || email || phone));\n  \n  // validation_score será calculado en el Backend según criterios finales\n  // Aquí solo guardamos la información extraída\n    const validationScore = isValid ? 1 : 0; // Score temporal, Backend lo recalcula\n\n    return {\n      json: {\n        ...item,\n        processed: true,\n        contact_data: {\n          name: name || \"Desconocido\",\n          email: email,\n          phone: phone,\n          position: position,\n          organization: \"LinkedIn\",\n          region: item.region,\n          source_url: link,\n          source_type: \"LinkedIn\",\n          is_valid: isValid,\n          validation_score: validationScore,\n        },\n      },\n    };\n  });\n\n} catch (err) {\n  // Error general\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  } else {\n    errorMsg = String(err);\n  }\n  \n  return [{ json: { \n    contact_data: {\n      is_valid: false,\n      validation_score: 0,\n      scraping_source: \"error\",\n      scraping_error: errorMsg,\n    }\n  }}];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -32,
-        608
+        6928,
+        8336
       ],
-      "id": "ecebdb4e-46fb-4e79-9c4f-2566110638e5",
+      "id": "ccd244f5-26bf-4fe7-88a7-e3ba4d9e2fb5",
       "name": "Code in JavaScript6"
     },
     {
@@ -857,25 +230,12 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -32,
-        752
+        6256,
+        8624
       ],
-      "id": "4df8c1ed-9bfe-4d33-a05e-46f1ef159b0d",
+      "id": "564b16c8-fabb-4764-9741-96ce032e2a09",
       "name": "HTTP Request3",
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "jsCode": "try {\n  const allItems = $input.all();\n  \n  return allItems.map(async (itemWrapper) => {\n    const item = itemWrapper.json;\n    const metadata = item.metadata;\n    const url = metadata.link;\n    \n    let htmlContent = null;\n    let fetchError = null;\n    let statusCode = null;\n\n    try {\n      // Hacer request con headers anti-bot mejorados\n      const response = await $httpClient.get(url, {\n        headers: {\n          \"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\",\n          \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\",\n          \"Accept-Language\": \"es-ES,es;q=0.9,en;q=0.8\",\n          \"Accept-Encoding\": \"gzip, deflate, br\",\n          \"Cache-Control\": \"no-cache\",\n          \"Pragma\": \"no-cache\",\n          \"Referer\": \"https://www.google.com/\",\n          \"Sec-Ch-Ua\": \"\\\"Not_A Brand\\\";v=\\\"8\\\", \\\"Chromium\\\";v=\\\"120\\\"\",\n          \"Sec-Ch-Ua-Mobile\": \"?0\",\n          \"Sec-Ch-Ua-Platform\": \"\\\"Windows\\\"\",\n          \"Sec-Fetch-Dest\": \"document\",\n          \"Sec-Fetch-Mode\": \"navigate\",\n          \"Sec-Fetch-Site\": \"none\",\n          \"Sec-Fetch-User\": \"?1\",\n          \"Upgrade-Insecure-Requests\": \"1\"\n        },\n        timeout: 15000, // 15 segundos\n        followRedirects: true,\n        maxRedirects: 5,\n        validateStatus: () => true, // Aceptar cualquier status (no lanzar error en 403, etc)\n      });\n\n      statusCode = response.status;\n      \n      if (response.status === 200 && response.data) {\n        htmlContent = response.data;\n      } else if (response.status === 403) {\n        fetchError = `CAPTCHA/Blocked (403)`;\n      } else if (response.status >= 500) {\n        fetchError = `Server error (${response.status})`;\n      } else {\n        fetchError = `HTTP ${response.status}`;\n      }\n\n      // Agregar pequeño delay para no saturar el servidor\n      await new Promise(resolve => setTimeout(resolve, 1000));\n\n    } catch (err) {\n      fetchError = err.message || String(err);\n    }\n\n    // ==================== DEVOLVER ESTRUCTURA COMPLETA ====================\n    // Incluir todo el item original + HTML + error\n    return {\n      json: {\n        ...item,\n        html_fetch: {\n          success: htmlContent ? true : false,\n          status_code: statusCode,\n          error: fetchError,\n          html_content: htmlContent,\n          source: htmlContent ? \"html\" : \"error\",\n        },\n      },\n    };\n  });\n\n} catch (err) {\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  } else {\n    errorMsg = String(err);\n  }\n  \n  return [{ json: { \n    html_fetch: {\n      success: false,\n      error: errorMsg,\n      html_content: null,\n    }\n  }}];\n}"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -464,
-        944
-      ],
-      "id": "6ac38176-e174-42c4-8aa6-1d51642ef711",
-      "name": "Code in JavaScript7"
     },
     {
       "parameters": {
@@ -884,10 +244,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        272,
-        704
+        6704,
+        8528
       ],
-      "id": "910d130e-fd1d-4fcc-8df2-ac834e3a3e6b",
+      "id": "7f605f0f-8d2b-4123-b968-ec42ed9e2a91",
       "name": "Combine Data"
     },
     {
@@ -899,23 +259,23 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        128,
-        704
+        6480,
+        8528
       ],
-      "id": "df8fbcf0-1d1c-48fa-8cab-738928b2ce49",
+      "id": "69ecf90d-92c0-4425-b53f-e407e79e407e",
       "name": "Prepare Data"
     },
     {
       "parameters": {
-        "jsCode": "try {\n  const allItems = $input.all();\n  \n  return allItems.map(itemWrapper => {\n    const item = itemWrapper.json;\n    const metadata = item.metadata;\n    \n    // Obtener HTML de la estructura de 3B-1B\n    let htmlContent = null;\n    let source = \"snippet\";\n    let extractionNotes = \"\";\n\n    // Verificar estructura html_fetch limpia de 3B-1B\n    if (item.html_fetch) {\n      if (item.html_fetch.success && item.html_fetch.html_content) {\n        htmlContent = item.html_fetch.html_content;\n        source = \"html\";\n        extractionNotes = \"HTML obtenido exitosamente\";\n      } else if (item.html_fetch.error) {\n        extractionNotes = `HTTP ${item.html_fetch.status_code}: ${item.html_fetch.error} - usando snippet`;\n      } else {\n        extractionNotes = \"Ningún HTML disponible - usando snippet\";\n      }\n    } else {\n      extractionNotes = \"Sin html_fetch - usando snippet\";\n    }\n\n    // Usar HTML si lo tenemos, sino snippet\n    const textToSearch = htmlContent || metadata.snippet || \"\";\n\n    // ==================== NOMBRE ====================\n    let name = metadata.title;\n    name = name.replace(/\\s*-\\s*.*$/, \"\");\n    name = name.replace(/[\\d\\-()]/g, \"\").trim();\n    if (name.length < 3) {\n      name = null;\n    }\n\n    // ==================== CARGO ====================\n    let position = null;\n    const positionKeywords = [\n      \"chef\", \"cocinero\", \"pastelero\", \"panadero\", \"sommelier\",\n      \"profesor\", \"instructor\", \"tutor\", \"capacitador\", \"consultor\",\n      \"médico\", \"doctor\", \"ingeniero\", \"arquitecto\", \"abogado\", \"contador\",\n      \"electricista\", \"plomero\", \"carpintero\", \"pintor\", \"mecánico\",\n      \"gerente\", \"director\", \"administrador\", \"coordinador\", \"supervisor\",\n      \"diseñador\", \"desarrollador\", \"programador\", \"analista\", \"técnico\",\n    ];\n\n    for (const keyword of positionKeywords) {\n      const regex = new RegExp(`\\\\b${keyword}\\\\b`, \"i\");\n      if (regex.test(textToSearch)) {\n        position = keyword.charAt(0).toUpperCase() + keyword.slice(1);\n        break;\n      }\n    }\n\n    // ==================== EMAIL ====================\n    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\n    const emails = textToSearch.match(emailRegex) || [];\n    const email = emails.length > 0 ? emails[0] : null;\n\n    // ==================== TELÉFONO ====================\n    const phoneRegex = /(\\+?56|0)?[\\s]?9[\\s]?[\\d]{4}[\\s]?[\\d]{4}|(\\+?56|0)?[\\s]?2[\\s]?[\\d]{4}[\\s]?[\\d]{4}/g;\n    const phones = textToSearch.match(phoneRegex) || [];\n    let phone = phones.length > 0 ? phones[0] : null;\n\n    if (phone) {\n      phone = phone.replace(/[\\s\\-().]/g, \"\");\n      if (!phone.startsWith(\"+56\")) {\n        if (phone.startsWith(\"0\")) {\n          phone = \"+56\" + phone.substring(1);\n        } else if (!phone.startsWith(\"56\")) {\n          phone = \"+56\" + phone;\n        } else {\n          phone = \"+\" + phone;\n        }\n      }\n    }\n\n    // ==================== ORGANIZACIÓN ====================\n    let organization = metadata.source;\n    if (organization) {\n      organization = organization.replace(/^LinkedIn\\s*·\\s*/, \"\").trim();\n    }\n\n    // ==================== VALIDACIÓN ====================\n    // Para Superprof: requiere NOMBRE + (EMAIL O TELÉFONO)\n    // Si no hay email/teléfono en snippet → is_valid = false\n    const isValid = !!(name && (email || phone));\n    const validationScore = isValid ? 0.7 : 0;\n\n    return {\n      json: {\n        ...item,\n        processed: true,\n        contact_data: {\n          name: name || \"Desconocido\",\n          email: email,\n          phone: phone,\n          position: position,\n          organization: organization,\n          region: item.region,\n          source_url: metadata.link,\n          source_type: metadata.source,\n          is_valid: isValid,\n          validation_score: validationScore,\n        },\n        extraction_info: {\n          source_used: source,\n          notes: extractionNotes,\n          http_status: item.html_fetch?.status_code || null,\n        },\n      },\n    };\n  });\n\n} catch (err) {\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  } else {\n    errorMsg = String(err);\n  }\n  \n  return [{ json: { \n    contact_data: {\n      is_valid: false,\n      validation_score: 0,\n      error: errorMsg,\n    }\n  }}];\n}"
+        "jsCode": "try {\n  const allItems = $input.all();\n  \n  return allItems.map(itemWrapper => {\n    const item = itemWrapper.json;\n    const metadata = item.metadata;\n    \n    // Obtener HTML de la estructura de 3B-1B\n    let htmlContent = null;\n    let source = \"snippet\";\n    let extractionNotes = \"\";\n\n    // Verificar estructura html_fetch limpia de 3B-1B\n    if (item.html_fetch) {\n      if (item.html_fetch.success && item.html_fetch.html_content) {\n        htmlContent = item.html_fetch.html_content;\n        source = \"html\";\n        extractionNotes = \"HTML obtenido exitosamente\";\n      } else if (item.html_fetch.error) {\n        extractionNotes = `HTTP ${item.html_fetch.status_code}: ${item.html_fetch.error} - usando snippet`;\n      } else {\n        extractionNotes = \"Ningún HTML disponible - usando snippet\";\n      }\n    } else {\n      extractionNotes = \"Sin html_fetch - usando snippet\";\n    }\n\n    // Usar HTML si lo tenemos, sino snippet\n    const textToSearch = htmlContent || metadata.snippet || \"\";\n\n    const genericNameTerms = new Set([\n      \"contacto\", \"inicio\", \"nombre empresa\", \"empresa\", \"servicios\", \"servicio\",\n      \"masajes\", \"masajes providencia\", \"masajes corporales\", \"home\", \"about\"\n    ]);\n\n    const toTitleCase = (value) => value\n      .split(\" \")\n      .filter(Boolean)\n      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())\n      .join(\" \" );\n\n    const cleanCandidate = (value) => (value || \"\")\n      .replace(/\\s*[-|•]\\s*.*/, \"\")\n      .replace(/[\\d()]/g, \"\")\n      .replace(/\\s+/g, \" \")\n      .trim();\n\n    const isGenericCandidate = (value) => {\n      const normalized = (value || \"\").toLowerCase().trim();\n      if (!normalized || normalized.length < 3) return true;\n      if (genericNameTerms.has(normalized)) return true;\n      if (/^(contacto|inicio|servicios?|home|masajes?)$/.test(normalized)) return true;\n      return false;\n    };\n\n    const domainToName = (domainValue) => toTitleCase(\n      (domainValue || \"\")\n        .replace(/^https?:\\/\\//i, \"\")\n        .replace(/^www\\./i, \"\")\n        .split(\"/\")[0]\n        .replace(/\\.(cl|com|net|org|io|app|co|es)$/i, \"\")\n        .replace(/[-_]+/g, \" \")\n        .trim()\n    );\n\n    const normalizeOrganization = (sourceValue, linkValue, titleValue) => {\n      let org = (sourceValue || \"\").replace(/^LinkedIn\\s*·\\s*/i, \"\").trim();\n\n      if (!org || org.includes(\".\")) {\n        try {\n          const host = new URL(linkValue || \"\").hostname;\n          if (host) {\n            org = domainToName(host);\n          }\n        } catch (_) {}\n      } else {\n        org = cleanCandidate(org);\n      }\n\n      if ((!org || isGenericCandidate(org)) && titleValue) {\n        const titleOrg = cleanCandidate(titleValue);\n        if (!isGenericCandidate(titleOrg)) {\n          org = toTitleCase(titleOrg);\n        }\n      }\n\n      return org && !isGenericCandidate(org) ? org : null;\n    };\n\n    // ==================== NOMBRE ====================\n    let name = cleanCandidate(metadata.title);\n    const personMatch = (metadata.title || \"\").match(/\\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3})\\b/);\n    if (personMatch) {\n      name = personMatch[1].trim();\n    }\n    if (isGenericCandidate(name)) {\n      name = null;\n    }\n\n    // ==================== CARGO ====================\n    let position = null;\n    const positionKeywords = [\n      \"chef\", \"cocinero\", \"pastelero\", \"panadero\", \"sommelier\",\n      \"profesor\", \"instructor\", \"tutor\", \"capacitador\", \"consultor\",\n      \"médico\", \"doctor\", \"ingeniero\", \"arquitecto\", \"abogado\", \"contador\",\n      \"electricista\", \"plomero\", \"carpintero\", \"pintor\", \"mecánico\",\n      \"gerente\", \"director\", \"administrador\", \"coordinador\", \"supervisor\",\n      \"diseñador\", \"desarrollador\", \"programador\", \"analista\", \"técnico\",\n    ];\n\n    for (const keyword of positionKeywords) {\n      const regex = new RegExp(`\\\\b${keyword}\\\\b`, \"i\");\n      if (regex.test(textToSearch)) {\n        position = keyword.charAt(0).toUpperCase() + keyword.slice(1);\n        break;\n      }\n    }\n\n    // ==================== EMAIL ====================\n    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/g;\n    const emails = textToSearch.match(emailRegex) || [];\n    const email = emails.length > 0 ? emails[0] : null;\n\n    // ==================== TELÉFONO ====================\n    const phoneRegex = /(\\+?56|0)?[\\s]?9[\\s]?[\\d]{4}[\\s]?[\\d]{4}|(\\+?56|0)?[\\s]?2[\\s]?[\\d]{4}[\\s]?[\\d]{4}/g;\n    const phones = textToSearch.match(phoneRegex) || [];\n    let phone = phones.length > 0 ? phones[0] : null;\n\n    if (phone) {\n      phone = phone.replace(/[\\s\\-().]/g, \"\");\n      if (!phone.startsWith(\"+56\")) {\n        if (phone.startsWith(\"0\")) {\n          phone = \"+56\" + phone.substring(1);\n        } else if (!phone.startsWith(\"56\")) {\n          phone = \"+56\" + phone;\n        } else {\n          phone = \"+\" + phone;\n        }\n      }\n    }\n\n    // ==================== ORGANIZACIÓN ====================\n    let organization = normalizeOrganization(metadata.source, metadata.link, metadata.title);\n\n    if (!name && organization) {\n      name = organization;\n    }\n\n    // ==================== VALIDACIÓN ====================\n    // Para Superprof: requiere NOMBRE + (EMAIL O TELÉFONO)\n    // Si no hay email/teléfono en snippet → is_valid = false\n    const isValid = !!(name && (email || phone));\n    const validationScore = isValid ? 1 : 0;\n\n    return {\n      json: {\n        ...item,\n        processed: true,\n        contact_data: {\n          name: name || \"Desconocido\",\n          email: email,\n          phone: phone,\n          position: position,\n          organization: organization,\n          region: item.region,\n          source_url: metadata.link,\n          source_type: metadata.source,\n          is_valid: isValid,\n          validation_score: validationScore,\n        },\n        extraction_info: {\n          source_used: source,\n          notes: extractionNotes,\n          http_status: item.html_fetch?.status_code || null,\n        },\n      },\n    };\n  });\n\n} catch (err) {\n  let errorMsg = \"Unknown error\";\n  if (typeof err === 'string') {\n    errorMsg = err;\n  } else if (err && typeof err === 'object' && 'message' in err) {\n    errorMsg = String(err.message);\n  } else {\n    errorMsg = String(err);\n  }\n  \n  return [{ json: { \n    contact_data: {\n      is_valid: false,\n      validation_score: 0,\n      error: errorMsg,\n    }\n  }}];\n}"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        416,
-        704
+        6928,
+        8528
       ],
-      "id": "ce5f663d-a32b-45b9-a924-8d565e0126cf",
+      "id": "03ee11a1-43c2-433e-88e8-d3fa8445c2d4",
       "name": "Code in JavaScript8"
     },
     {
@@ -930,7 +290,7 @@
           "conditions": [
             {
               "id": "2cd8af3f-f9dd-4dfb-971d-dea61bd52d7a",
-              "leftValue": "={{ $json.contact_data.is_valid }}",
+              "leftValue": "={{ !!$json.contact_data }}",
               "rightValue": "true",
               "operator": {
                 "type": "string",
@@ -947,10 +307,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        768,
-        624
+        7824,
+        8384
       ],
-      "id": "b25ff077-660f-4ba2-b5ad-b32884ed4333",
+      "id": "9632a364-8bc5-433c-a727-959dd8f4ee66",
       "name": "Valid?"
     },
     {
@@ -958,11 +318,37 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        560,
-        624
+        7152,
+        8384
       ],
-      "id": "706638b6-05a5-442c-ae43-d69cd29c828c",
+      "id": "b7e78d2c-ff2b-42e9-8f30-1716ce3742c7",
       "name": "Merge Branches"
+    },
+    {
+      "parameters": {
+        "jsCode": "const genericTerms = new Set(['contacto','inicio','empresa','servicio','servicios','home','about','nosotros','quienes somos','sitio oficial']);\nconst companyTerms = new Set(['spa','ltda','limitada','sa','s.a','eirl','sociedad','empresa','group','grupo','holding','consultora','consultores','clinica','clínica']);\nconst connectorWords = new Set(['de','del','la','las','los','y']);\n\nconst clean = (value) => (value || '').toString().replace(/\\s+/g, ' ').replace(/\\s*[-|•]\\s*.*/, '').trim();\nconst titleCase = (value) => clean(value).split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');\nconst isGeneric = (value) => {\n  const v = clean(value).toLowerCase();\n  return !v || v.length < 3 || genericTerms.has(v) || /^(contacto|inicio|servicios?|home|masajes?)$/.test(v);\n};\nconst fromUrl = (rawUrl) => {\n  try {\n    const host = new URL(rawUrl || '').hostname.replace(/^www\\./i, '');\n    return titleCase(host.replace(/\\.(cl|com|net|org|io|app|co|es)$/i, '').replace(/[-_]+/g, ' '));\n  } catch (_) {\n    return null;\n  }\n};\nconst isLikelyPerson = (value) => {\n  const candidate = clean(value);\n  if (isGeneric(candidate) || /\\d/.test(candidate)) return false;\n  const words = candidate.split(/\\s+/).filter(Boolean);\n  const core = words.filter(w => !connectorWords.has(w.toLowerCase()));\n  if (core.length < 2 || core.length > 4) return false;\n  return core.every(w => /^[A-ZÁÉÍÓÚÑ][a-záéíóúñ'’-]+$/.test(w) && !companyTerms.has(w.toLowerCase().replace(/\\./g, '')));\n};\n\nreturn $input.all().map((itemWrapper) => {\n  const item = itemWrapper.json;\n  const contact = item.contact_data || {};\n  const title = clean(item.metadata?.title || item.title || '');\n  const source = clean(item.metadata?.source || contact.source_type || '');\n  const url = contact.source_url || item.metadata?.link || '';\n\n  let name = clean(contact.name);\n  let organization = clean(contact.organization);\n\n  if (!isLikelyPerson(name)) {\n    const match = title.match(/\\b([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3})\\b/);\n    const titlePerson = match ? clean(match[1]) : '';\n    name = isLikelyPerson(titlePerson) ? titlePerson : null;\n  }\n\n  if (!organization || isGeneric(organization) || isLikelyPerson(organization) || organization.includes('.')) {\n    if (source && !isGeneric(source) && !isLikelyPerson(source) && !source.includes('.')) {\n      organization = titleCase(source);\n    }\n  }\n\n  if (!organization || isGeneric(organization) || isLikelyPerson(organization)) {\n    const domainOrg = fromUrl(url);\n    if (domainOrg && !isGeneric(domainOrg) && !isLikelyPerson(domainOrg)) {\n      organization = domainOrg;\n    }\n  }\n\n  if (!name && organization) {\n    name = organization;\n  }\n\n  let score = Number(contact.validation_score);\n  const isValid = !!contact.is_valid;\n  if (!Number.isFinite(score)) score = isValid ? 1 : 0.3;\n  if (!isValid && score < 0.3) score = 0.3;\n\n  contact.name = name || contact.name || organization || 'Desconocido';\n  contact.organization = organization || null;\n  contact.is_valid = isValid;\n  contact.validation_score = score;\n\n  item.contact_data = contact;\n  return { json: item };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7376,
+        8384
+      ],
+      "id": "4de8e1e3-4938-4461-a02e-6d535a9cbd94",
+      "name": "Contact Final Validation"
+    },
+    {
+      "parameters": {
+        "jsCode": "const regionRules = [\n  { region: 'Arica y Parinacota', keys: ['arica y parinacota','arica','parinacota'] },\n  { region: 'Tarapacá', keys: ['tarapacá','tarapaca','iquique'] },\n  { region: 'Antofagasta', keys: ['antofagasta'] },\n  { region: 'Atacama', keys: ['atacama','copiapó','copiapo'] },\n  { region: 'Coquimbo', keys: ['coquimbo','la serena'] },\n  { region: 'Valparaíso', keys: ['valparaíso','valparaiso','viña del mar','vina del mar','quilpué','quilpue','concón','concon'] },\n  { region: 'Santiago', keys: ['santiago','metropolitana','rm','providencia','las condes','ñuñoa','nunoa'] },\n  { region: \"O'Higgins\", keys: [\"o'higgins\",'ohiggins','rancagua'] },\n  { region: 'Maule', keys: ['maule','talca'] },\n  { region: 'Ñuble', keys: ['ñuble','nuble','chillán','chillan'] },\n  { region: 'Biobío', keys: ['biobío','biobio','bío bío','bio bio','concepción','concepcion'] },\n  { region: 'La Araucanía', keys: ['la araucanía','la araucania','araucanía','araucania','temuco'] },\n  { region: 'Los Ríos', keys: ['los ríos','los rios','valdivia'] },\n  { region: 'Los Lagos', keys: ['los lagos','puerto montt'] },\n  { region: 'Aysén', keys: ['aysén','aysen','coihaique','coyhaique'] },\n  { region: 'Magallanes', keys: ['magallanes','punta arenas'] }\n];\n\nreturn $input.all().map((itemWrapper) => {\n  const item = itemWrapper.json;\n  const contact = item.contact_data || {};\n  const text = [\n    contact.source_url || '',\n    contact.organization || '',\n    item.metadata?.title || '',\n    item.metadata?.snippet || '',\n    item.snippet || ''\n  ].join(' ').toLowerCase();\n\n  let inferred = null;\n  for (const rule of regionRules) {\n    if (rule.keys.some(key => text.includes(key))) {\n      inferred = rule.region;\n      break;\n    }\n  }\n\n  if (inferred) {\n    contact.region = inferred;\n    item.region = inferred;\n  }\n\n  item.contact_data = contact;\n  return { json: item };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7600,
+        8384
+      ],
+      "id": "e0052a9f-9eda-4a5f-a215-1d4e4da592f1",
+      "name": "Region Correction"
     },
     {
       "parameters": {
@@ -1023,25 +409,25 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        1632,
-        784
+        8496,
+        8384
       ],
-      "id": "ca624d12-eb6c-4478-98ae-6f81841a6d96",
+      "id": "f8e58d8f-3c14-4d37-aa5d-8718e8a78604",
       "name": "Notify Backend"
     },
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "SET @sid = CAST('{{ \n  $items(\"Webhook\")[0].json.search_id \n  || $items(\"Webhook\")[0].json.body?.search_id \n  || 0 \n}}' AS UNSIGNED);\n\nINSERT INTO contacts\n(name, email, phone, position, organization, region, source_url, source_type, research_lines, is_valid, validation_score)\nVALUES\n(\n  '{{$json.contact_data.name.replace(/'/g, \"''\")}}',\n  {{$json.contact_data.email ? `'${$json.contact_data.email.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.phone ? `'${$json.contact_data.phone.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.position ? `'${$json.contact_data.position.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.organization ? `'${$json.contact_data.organization.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.region ? `'${$json.contact_data.region.replace(/'/g, \"''\")}'` : 'NULL'}},\n  '{{$json.contact_data.source_url.replace(/'/g, \"''\")}}',\n  {{$json.contact_data.source_type ? `'${$json.contact_data.source_type.replace(/'/g, \"''\")}'` : 'NULL'}},\n  NULL,\n  1,\n  {{ Number($json.contact_data.validation_score || 0.7) }}\n)\nON DUPLICATE KEY UPDATE\n  id = LAST_INSERT_ID(id),\n  updated_at = CURRENT_TIMESTAMP;\n\nSET @cid = LAST_INSERT_ID();\n\nINSERT INTO search_results (search_id, contact_id, relevance_score)\nSELECT\n  @sid,\n  @cid,\n  COALESCE((SELECT validation_score FROM contacts WHERE id = @cid), 0.7)\nWHERE @sid > 0\nON DUPLICATE KEY UPDATE\n  relevance_score = VALUES(relevance_score);\n\nSELECT @sid AS search_id, @cid AS contact_id;",
+        "query": "SET @sid = CAST('{{ \n  $items(\"Webhook\")[0].json.search_id \n  || $items(\"Webhook\")[0].json.body?.search_id \n  || 0 \n}}' AS UNSIGNED);\n\nINSERT INTO contacts\n(name, email, phone, position, organization, region, source_url, source_type, research_lines, is_valid, validation_score)\nVALUES\n(\n  '{{$json.contact_data.name.replace(/'/g, \"''\")}}',\n  {{$json.contact_data.email ? `'${$json.contact_data.email.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.phone ? `'${$json.contact_data.phone.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.position ? `'${$json.contact_data.position.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.organization ? `'${$json.contact_data.organization.replace(/'/g, \"''\")}'` : 'NULL'}},\n  {{$json.contact_data.region ? `'${$json.contact_data.region.replace(/'/g, \"''\")}'` : 'NULL'}},\n  '{{$json.contact_data.source_url.replace(/'/g, \"''\")}}',\n  {{$json.contact_data.source_type ? `'${$json.contact_data.source_type.replace(/'/g, \"''\")}'` : 'NULL'}},\n  NULL,\n  1,\n  {{ Number($json.contact_data.validation_score || 1) }}\n)\nON DUPLICATE KEY UPDATE\n  id = LAST_INSERT_ID(id),\n  updated_at = CURRENT_TIMESTAMP;\n\nSET @cid = LAST_INSERT_ID();\n\nINSERT INTO search_results (search_id, contact_id, relevance_score)\nSELECT\n  @sid,\n  @cid,\n  COALESCE((SELECT validation_score FROM contacts WHERE id = @cid), 1)\nWHERE @sid > 0\nON DUPLICATE KEY UPDATE\n  relevance_score = VALUES(relevance_score);\n\nSELECT @sid AS search_id, @cid AS contact_id;",
         "options": {}
       },
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        1072,
-        608
+        8048,
+        8384
       ],
-      "id": "95ded4d7-6cb2-4a93-a936-dfeb418de2fc",
+      "id": "fe5726ea-8a31-4e10-979a-606d1e84235c",
       "name": "Insert Valid Contacts",
       "credentials": {
         "mySql": {
@@ -1052,15 +438,15 @@
     },
     {
       "parameters": {
-        "jsCode": "const webhookData = $(\"Webhook\").first().json;\nconst inserted = $(\"Insert Valid Contacts\").all().length;\n\n// En Webhook de n8n normalmente viene en body\nconst rawSearchId = webhookData?.body?.search_id ?? webhookData?.search_id;\n\nconst searchId = Number(rawSearchId);\nif (!Number.isInteger(searchId) || searchId <= 0) {\n  throw new Error(`search_id inválido. Valor recibido: ${JSON.stringify(rawSearchId)}`);\n}\n\nreturn [{\n  json: {\n    search_id: searchId,\n    status: \"completed\",\n    results_count: inserted,\n    duplicates_count: 0,\n    execution_time_ms: 0,\n    avg_validation_score: 0.7,\n    stats: {},\n    failed_searches: 0,\n    high_quality_contacts: inserted\n  }\n}];"
+        "jsCode": "const webhookData = $(\"Webhook\").first().json;\nconst inserted = $(\"Insert Valid Contacts\").all().length;\n\n// En Webhook de n8n normalmente viene en body\nconst rawSearchId = webhookData?.body?.search_id ?? webhookData?.search_id;\n\nconst searchId = Number(rawSearchId);\nif (!Number.isInteger(searchId) || searchId <= 0) {\n  throw new Error(`search_id inválido. Valor recibido: ${JSON.stringify(rawSearchId)}`);\n}\n\nreturn [{\n  json: {\n    search_id: searchId,\n    status: \"completed\",\n    results_count: inserted,\n    duplicates_count: 0,\n    execution_time_ms: 0,\n    avg_validation_score: 1,\n    stats: {},\n    failed_searches: 0,\n    high_quality_contacts: inserted\n  }\n}];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1488,
-        608
+        8272,
+        8384
       ],
-      "id": "0ccb9590-5415-4617-9aca-994b166d9768",
+      "id": "061530b4-cf1d-4db0-a195-43285ad7f416",
       "name": "Build Callback"
     },
     {
@@ -1092,10 +478,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -368,
-        656
+        5808,
+        8432
       ],
-      "id": "899b9f27-30f8-41d7-a591-58b41cbd789e",
+      "id": "1b15e3f3-014e-4aae-a4cd-1a76bb9770ae",
       "name": "Data Valid?"
     },
     {
@@ -1127,10 +513,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        -176,
-        656
+        6032,
+        8432
       ],
-      "id": "1e3c3428-7f3a-4bbb-b93e-13f235dab48b",
+      "id": "ac59c7a5-7502-400c-a0d1-3c115e270b07",
       "name": "Linkedin?"
     }
   ],
@@ -1169,68 +555,6 @@
         ]
       ]
     },
-    "Wait": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items": {
-      "main": [
-        [
-          {
-            "node": "Data Cleaning",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Data Extract": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Regex Data Extractor": {
-      "main": [
-        [
-          {
-            "node": "Data Normalization",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "IF Data is Valid": {
       "main": [
         [
@@ -1249,213 +573,11 @@
         ]
       ]
     },
-    "Data Filter": {
-      "main": [
-        [
-          {
-            "node": "Regex Data Extractor",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Data Cleaning": {
-      "main": [
-        [
-          {
-            "node": "Data Filter",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Data Structure": {
       "main": [
         [
           {
             "node": "IF Data is Valid",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Data Extract",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request2": {
-      "main": [
-        [
-          {
-            "node": "Data Extract",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript5",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Parser": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript2": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript4",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Edit Fields1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields1": {
-      "main": [
-        [
-          {
-            "node": "Wait1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript3": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait1": {
-      "main": [
-        [
-          {
-            "node": "If1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript5": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If1": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript3",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "HTTP Request1",
             "type": "main",
             "index": 0
           }
@@ -1554,6 +676,28 @@
       "main": [
         [
           {
+            "node": "Contact Final Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contact Final Validation": {
+      "main": [
+        [
+          {
+            "node": "Region Correction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Region Correction": {
+      "main": [
+        [
+          {
             "node": "Valid?",
             "type": "main",
             "index": 0
@@ -1618,12 +762,12 @@
       ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1",
     "availableInMCP": false
   },
-  "versionId": "87d25054-a4a1-4197-b7dd-0da1e816e722",
+  "versionId": "56043686-1c91-4f2c-bfe6-71dfe9240ca5",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "8af585a976a06fa313c78e3b8a77abee2722615ebc092cde55ae930a8870b0b7"

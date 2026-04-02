@@ -25,7 +25,7 @@ const StatusIndicator = ({ status, resultsCount, validResultsCount }) => {
       case 'processing':
         return 'Procesando búsqueda y validando contactos...';
       case 'completed':
-        return `Búsqueda completada: ${resultsCount} contactos encontrados (${validResultsCount} únicos)`;
+        return `Búsqueda completada: ${resultsCount} datos encontrados`;
       case 'failed':
         return 'Error al procesar la búsqueda. Por favor intenta nuevamente.';
       default:

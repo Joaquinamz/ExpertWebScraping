@@ -122,3 +122,21 @@ class N8NCallback(BaseModel):
     
     class Config:
         from_attributes = True
+
+
+class SearchLogItem(BaseModel):
+    """Schema para un log de ejecución del flujo."""
+    id: int
+    search_id: int
+    search_keywords: Optional[str] = None
+    search_status: Optional[str] = None
+    source_type: Optional[str] = None
+    source_url: Optional[str] = None
+    status: Optional[str] = None
+    contacts_found: int = 0
+    error_message: Optional[str] = None
+    response_time_ms: Optional[int] = None
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

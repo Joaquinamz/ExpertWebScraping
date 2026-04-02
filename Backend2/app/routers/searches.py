@@ -8,6 +8,7 @@ import asyncio
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Query, status, BackgroundTasks, Header
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 
 from app.database import get_db
 from app.schemas.search import (
@@ -17,11 +18,13 @@ from app.schemas.search import (
     SearchWithResults,
     SearchResultItem,
     N8NCallback,
+    SearchLogItem,
 )
 from app.schemas.common import PaginatedResponse, StatusResponse
 from app.services.search_service import SearchService
 from app.config import Settings
 from app.models.search_log import SearchLog
+from app.models.search import Search
 
 # Cargar configuración
 settings = Settings()
@@ -164,6 +167,52 @@ def list_searches(
         total=total,
         skip=skip,
         limit=limit
+    )
+
+
+@router.get(
+    "/logs/recent",
+    response_model=PaginatedResponse[SearchLogItem],
+    summary="Listar logs recientes",
+    description="Obtiene logs básicos del flujo de automatización (ejecuciones, errores y resultados)."
+)
+def list_recent_logs(
+    skip: int = Query(0, ge=0, description="Registros a saltar"),
+    limit: int = Query(30, ge=1, le=200, description="Límite de logs"),
+    search_id: Optional[int] = Query(None, description="Filtrar por búsqueda específica"),
+    db: Session = Depends(get_db)
+):
+    """Listar logs recientes del flujo."""
+    query = db.query(SearchLog, Search).join(Search, Search.id == SearchLog.search_id)
+
+    if search_id is not None:
+        query = query.filter(SearchLog.search_id == search_id)
+
+    total = query.count()
+    rows = query.order_by(desc(SearchLog.created_at)).offset(skip).limit(limit).all()
+
+    items = [
+        SearchLogItem(
+            id=log.id,
+            search_id=log.search_id,
+            search_keywords=search.keywords,
+            search_status=search.status,
+            source_type=log.source_type,
+            source_url=log.source_url,
+            status=log.status,
+            contacts_found=log.contacts_found or 0,
+            error_message=log.error_message,
+            response_time_ms=log.response_time_ms,
+            created_at=log.created_at,
+        )
+        for log, search in rows
+    ]
+
+    return PaginatedResponse(
+        items=items,
+        total=total,
+        skip=skip,
+        limit=limit,
     )
 
 

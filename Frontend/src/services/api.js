@@ -77,6 +77,18 @@ export const searchService = {
     return response.data;
   },
 
+  // Obtener logs recientes del flujo
+  getRecentLogs: async (params = {}) => {
+    const response = await apiClient.get('/searches/logs/recent', {
+      params: {
+        skip: 0,
+        limit: 30,
+        ...params
+      }
+    });
+    return response.data;
+  },
+
   // Actualizar estado de búsqueda
   updateSearchStatus: async (searchId, status) => {
     const response = await apiClient.patch(`/searches/${searchId}/status`, { status });
@@ -173,10 +185,30 @@ export const apiUtils = {
 
   // Manejo de errores
   handleError: (error) => {
+    const stringifyDetail = (detail) => {
+      if (detail === null || detail === undefined) return 'Error en el servidor';
+      if (typeof detail === 'string') return detail;
+      if (Array.isArray(detail)) {
+        return detail
+          .map((item) => {
+            if (typeof item === 'string') return item;
+            if (item && typeof item === 'object') {
+              const loc = Array.isArray(item.loc) ? item.loc.join('.') : item.loc;
+              const msg = item.msg || JSON.stringify(item);
+              return loc ? `${loc}: ${msg}` : msg;
+            }
+            return String(item);
+          })
+          .join(' | ');
+      }
+      if (typeof detail === 'object') return JSON.stringify(detail);
+      return String(detail);
+    };
+
     if (error.response) {
       // Error de respuesta del servidor
       return {
-        message: error.response.data?.detail || 'Error en el servidor',
+        message: stringifyDetail(error.response.data?.detail),
         status: error.response.status,
         data: error.response.data
       };
@@ -190,7 +222,7 @@ export const apiUtils = {
     } else {
       // Error general
       return {
-        message: error.message || 'Error desconocido',
+        message: typeof error.message === 'string' ? error.message : 'Error desconocido',
         status: -1,
         data: null
       };

@@ -62,9 +62,9 @@ class SearchService:
             posiciones = posiciones_por_area.get(area_seleccionada, posiciones_por_area["General"])
             
             # Parsear regiones si hay múltiples (separadas por coma)
-            regiones_seleccionadas = [r.strip() for r in search.region.split(',')] if search.region else ["Metropolitana"]
+            regiones_seleccionadas = [r.strip() for r in search.region.split(',')] if search.region else ["Santiago"]
             if not regiones_seleccionadas or regiones_seleccionadas == ['']:
-                regiones_seleccionadas = ["Metropolitana"]
+                regiones_seleccionadas = ["Santiago"]
             
             # Generar entre 8 y 15 contactos de prueba
             num_contactos = random.randint(8, 15)
