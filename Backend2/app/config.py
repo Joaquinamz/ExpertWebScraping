@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     DB_HOST: str = "localhost"
     DB_PORT: int = 3306
     DB_USER: str = "root"
-    DB_PASSWORD: str = "20020715Jc!"
+    DB_PASSWORD: str = "Unab.2026"
     DB_NAME: str = "expert_finder_db"
     
     # API
@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     RELOAD: bool = True
     
     # CORS
-    CORS_ORIGINS: str = "http://localhost:3000,http://localhost:5173"
+    CORS_ORIGINS: str = "http://localhost:80,http://localhost:3000,http://localhost:5173"
     
     # Security
     SECRET_KEY: str = "your-secret-key-change-in-production"
